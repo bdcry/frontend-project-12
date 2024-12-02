@@ -1,7 +1,7 @@
 build:
 	cd frontend && npm run build
 
-start-frontend: 
+start-frontend:
 	cd frontend && npm run dev
 
 start-backend: 
