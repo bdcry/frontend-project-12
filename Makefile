@@ -12,3 +12,6 @@ develop:
 
 start:
 	make start-backend
+	
+install: 
+	cd frontend && npm ci
