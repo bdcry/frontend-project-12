@@ -6,7 +6,7 @@ lint-frontend:
 
 build:
 	rm -rf frontend/dist
-	cd frontend && npm install && npm run build
+	cd frontend && npm ci && npm run build
 
 start-frontend:
 	cd frontend && npm run dev
