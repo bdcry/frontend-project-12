@@ -1,14 +1,24 @@
-build:
-	cd frontend && npm run build
+lint-frontend:
+	make -C frontend lint
 
-start-frontend: 
-	cd frontend && npm run dev
+install:
+	npm ci
 
-start-backend: 
+start-frontend:
+	make -C frontend start
+
+start-backend:
 	npx start-server -s ./frontend/dist
 
-develop: 
-	make start-frontend && make start-backend
+deploy:
+	git push heroku main
 
 start:
 	make start-backend
+
+develop:
+	make start-backend & make start-frontend
+
+build:
+	rm -rf frontend/dist
+	npm run build
