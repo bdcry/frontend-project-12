@@ -13,5 +13,5 @@ develop:
 start:
 	make start-backend
 
-install: 
-	npm ci
+install:
+	npm ci && make -C frontend install
