@@ -5,6 +5,7 @@ lint-frontend:
 	cd frontend && npm run lint
 
 build:
+	rm -rf frontend/dist
 	echo "Starting build..." && cd frontend && npm run build && echo "Build complete"
 
 start-frontend:
