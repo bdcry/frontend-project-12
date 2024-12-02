@@ -1,5 +1,12 @@
+install:
+	cd frontend && npm ci
+
+lint-frontend:
+	cd frontend && npm run lint
+
 build:
-	cd frontend && npm run build
+	rm -rf frontend/dist
+	cd frontend && npm install && npm run build
 
 start-frontend:
 	cd frontend && npm run dev
@@ -8,10 +15,7 @@ start-backend:
 	npx start-server -s ./frontend/dist
 
 develop: 
-	make start-frontend && make start-backend
+	make start-backend & make start-frontend
 
 start:
 	make start-backend
-
-install:
-	npm ci && make -C frontend install
