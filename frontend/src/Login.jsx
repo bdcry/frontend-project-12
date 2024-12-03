@@ -9,8 +9,16 @@ const Login = () => {
       password: '',
     },
     onSubmit: (values) => {
-      console.log(values);
-    },
+      console.log('Отправка данных:', values)
+    }
+    // onSubmit: (values, { setStatus }) => {
+    //   console.log('Отправка данных:', values);
+
+    //   // Testing Formik Global Error
+    //   setTimeout(() => {
+    //     setStatus('Неверное имя пользователя или пароль');
+    //   }, 5000);
+    // },
   });
   return (
     <Container className="container-fluid h-100">
@@ -33,6 +41,7 @@ const Login = () => {
                     required
                     onChange={formik.handleChange}
                     value={formik.values.username}
+                    isInvalid={formik.status}
                   ></Form.Control>
                   <Form.Label>Ваш ник</Form.Label>
                 </Form.Group>
@@ -46,8 +55,14 @@ const Login = () => {
                     required
                     onChange={formik.handleChange}
                     value={formik.values.password}
+                    isInvalid={formik.status}
                   ></Form.Control>
                   <Form.Label>Пароль</Form.Label>
+                  {formik.status && (
+                    <Form.Control.Feedback type="invalid" className='d-block mb-3' tooltip>
+                      {formik.status}
+                    </Form.Control.Feedback>
+                  )}
                 </Form.Group>
                 <Button
                   type="submit"
