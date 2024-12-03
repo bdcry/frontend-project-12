@@ -1,5 +1,5 @@
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
-import avatar from '../assets/avatar-DIE1AEpS.jpg';
+import avatar from '../../assets/avatar-DIE1AEpS.jpg';
 
 import { useFormik } from 'formik';
 
