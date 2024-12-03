@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/bdcry/frontend-project-12#readme",
   "dependencies": {
-    "@hexlet/chat-server": "^2.0.4"
+    "@hexlet/chat-server": "^2.0.4",
+    "bootstrap": "^5.3.3",
+    "formik": "^2.4.6",
+    "react-bootstrap": "^2.10.6"
   }
 }
