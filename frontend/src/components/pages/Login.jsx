@@ -32,7 +32,7 @@ const Login = () => {
     onSubmit: (values, { setStatus }) => handleSubmit(values, navigate, setStatus),
   });
   return (
-    <Container className="container-fluid h-100">
+    <Container fluid className="h-100">
       <Row className="row justify-content-center align-content-center h-100">
         <Col className="col-12 col-md-8 col-xxl-6">
           <Card className="card shadow-sm">
