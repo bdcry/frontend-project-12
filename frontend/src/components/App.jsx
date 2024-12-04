@@ -5,13 +5,20 @@ import Page404 from './pages/Page404.jsx';
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/login' element={<Login />} />
-        <Route path='/' element={<Login />} />
-        <Route path='*' element={<Page404 />} />
-      </Routes>
-    </BrowserRouter>
+    <div className='d-flex flex-column h-100'>
+      <nav className='shadow-sm navbar navbar-expand-lg navbar-light bg-white'>
+        <div className="container">
+          <a href="/login" className='navbar-brand'>Hexlet Chat</a>
+        </div>
+      </nav>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/login' element={<Login />} />
+          <Route path='/' element={<Login />} />
+          <Route path='*' element={<Page404 />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   )
 }
 
