@@ -1,9 +1,10 @@
 import { Outlet, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const ProtectedRoutes = () => {
-  const token = localStorage.getItem('token');
+  const isLoggedIn = useSelector(({ auth }) => auth.isLoggedIn);
 
-  return token ? <Outlet /> : <Navigate to='/login' />
+  return isLoggedIn ? <Outlet /> : <Navigate to='/login' />
 }
 
 export default ProtectedRoutes;

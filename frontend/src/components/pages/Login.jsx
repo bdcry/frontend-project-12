@@ -2,10 +2,11 @@ import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
-
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../../slices/authSlice';
 import avatar from '../../assets/avatar-DIE1AEpS.jpg';
 
-const handleSubmit = async (values, navigate, setStatus) => {
+const handleSubmit = async (values, navigate, setStatus, dispatch) => {
   try {
     const response = await axios.post('/api/v1/login', {
       username: values.username,
@@ -13,7 +14,7 @@ const handleSubmit = async (values, navigate, setStatus) => {
      });
     console.log(response.data)
     const token = response.data.token;
-    localStorage.setItem('token', token)
+    dispatch(loginSuccess(token));
     setStatus();
     navigate('/');
   } catch (error) {
@@ -24,12 +25,13 @@ const handleSubmit = async (values, navigate, setStatus) => {
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       username: '',
       password: '',
     },
-    onSubmit: (values, { setStatus }) => handleSubmit(values, navigate, setStatus),
+    onSubmit: (values, { setStatus }) => handleSubmit(values, navigate, setStatus, dispatch),
   });
   return (
     <Container fluid className="h-100">
