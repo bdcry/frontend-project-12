@@ -6,7 +6,7 @@ lint-frontend:
 
 build:
 	rm -rf frontend/dist
-	cd frontend && npm run build
+	cd frontend && npm run build --log-level=verbose
 
 start-frontend:
 	cd frontend && npm run dev

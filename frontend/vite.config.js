@@ -7,8 +7,13 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:5001'
-      }
-    }
-  }
-})
+        target: 'http://localhost:5001',
+      },
+    },
+  },
+  build: {
+    rollupOptions: {
+      external: ['i18next', 'react-i18next'],
+    },
+  },
+});
