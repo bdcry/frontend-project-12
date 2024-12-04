@@ -1,25 +1,35 @@
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
+import axios from 'axios';
+import { useFormik } from 'formik';
+import { useNavigate } from 'react-router-dom';
+
 import avatar from '../../assets/avatar-DIE1AEpS.jpg';
 
-import { useFormik } from 'formik';
+const handleSubmit = async (values, navigate, setStatus) => {
+  try {
+    const response = await axios.post('/api/v1/login', {
+      username: values.username,
+      password: values.password,
+     });
+    console.log(response.data)
+    const token = response.data.token;
+    localStorage.setItem('token', token)
+    setStatus();
+    navigate('/');
+  } catch (error) {
+    console.log('Ошибка во время отправки данных:', error);
+    setStatus('Неверное имя пользователя или пароль');
+  }
+}
 
 const Login = () => {
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       username: '',
       password: '',
     },
-    onSubmit: (values) => {
-      console.log('Отправка данных:', values)
-    }
-    // onSubmit: (values, { setStatus }) => {
-    //   console.log('Отправка данных:', values);
-
-    //   // Testing Formik Global Error
-    //   setTimeout(() => {
-    //     setStatus('Неверное имя пользователя или пароль');
-    //   }, 5000);
-    // },
+    onSubmit: (values, { setStatus }) => handleSubmit(values, navigate, setStatus),
   });
   return (
     <Container className="container-fluid h-100">
