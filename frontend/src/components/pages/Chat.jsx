@@ -13,8 +13,6 @@ const Chat = () => {
   const messages = useSelector(({ messages }) => messages.messagesData);
 
   const ActiveChannelForTitle = channels.find((channel) => channel.id === activeChannelId) || {};
-  // const [ActiveChannelForTitle] = channels.filter((channel) => channel.id === activeChannelId);
-  console.log(ActiveChannelForTitle);
   const filteredMessage = messages.filter((message) => message.channelId === activeChannelId);
 
   useEffect(() => {
