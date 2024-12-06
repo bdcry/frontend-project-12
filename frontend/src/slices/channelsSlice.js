@@ -13,8 +13,12 @@ export const fetchChannelsByToken = createAsyncThunk(
 
 const channelsSlice = createSlice({
   name: 'channels',
-  initialState: { channelsData: [], loadingStatus: 'idle', error: null },
-  reducers: {},
+  initialState: { channelsData: [], activeChannelId: null, loadingStatus: 'idle', error: null },
+  reducers: {
+    selectActiveTab: (state, action) => {
+      state.activeChannelId = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchChannelsByToken.pending, (state) => {
@@ -25,6 +29,10 @@ const channelsSlice = createSlice({
         state.channelsData = payload;
         state.loadingStatus = 'idle';
         state.error = null;
+
+        if (payload.length > 0) {
+          state.activeChannelId = payload[0].id;
+        }
       })
       .addCase(fetchChannelsByToken.rejected, (state, action) => {
         state.loadingStatus = 'rejected';
@@ -34,3 +42,4 @@ const channelsSlice = createSlice({
 });
 
 export default channelsSlice.reducer;
+export const { selectActiveTab } = channelsSlice.actions;

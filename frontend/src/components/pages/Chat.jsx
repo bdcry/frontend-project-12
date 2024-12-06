@@ -1,17 +1,48 @@
 import { useEffect } from 'react';
-import { Col, Container, Row, Button, Nav, Form, InputGroup } from 'react-bootstrap';
+import { Col, Container, Row, Button, Nav, Form, InputGroup,} from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchChannelsByToken } from '../../slices/channelsSlice';
 import { fetchmessagesByToken } from '../../slices/messagesSlice';
+import { selectActiveTab } from '../../slices/channelsSlice';
 
 const Chat = () => {
-  const token = useSelector(({ auth }) => auth.token);
   const dispatch = useDispatch();
+  const token = useSelector(({ auth }) => auth.token);
+  const channels = useSelector(({ channels }) => channels.channelsData);
+  const activeChannelId = useSelector(({ channels }) => channels.activeChannelId);
+  const messages = useSelector(({ messages }) => messages.messagesData);
+
+  const ActiveChannelForTitle = channels.find((channel) => channel.id === activeChannelId) || {};
+  // const [ActiveChannelForTitle] = channels.filter((channel) => channel.id === activeChannelId);
+  console.log(ActiveChannelForTitle);
+  const filteredMessage = messages.filter((message) => message.channelId === activeChannelId);
 
   useEffect(() => {
     dispatch(fetchChannelsByToken(token));
     dispatch(fetchmessagesByToken(token));
   }, [dispatch, token]);
+
+  const renderChannels = () => {
+    return channels.map((channel) => (
+      <Nav.Item as="li" className="w-100" key={channel.id}>
+        <Button
+          type="button"
+          className="w-100 rounded-0 text-start"
+          variant={ channel.id === activeChannelId ? 'secondary': ''}
+          onClick={() => dispatch(selectActiveTab(channel.id))}
+        >
+          <span className="me-1">#</span>
+          {channel.name}
+        </Button>
+      </Nav.Item>
+    ));
+  };
+
+  const renderMessages = () => {
+    return filteredMessage.map((message) => (
+      <div id="messages-box" className="chat-messages overflow-auto px-5" key={message.id}>{message.body}</div>
+    ))
+  };
 
   return (
     <Container className="h-100 my-4 overflow-hidden rounded shadow">
@@ -45,40 +76,18 @@ const Chat = () => {
             id="channels-box"
             className="flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block"
           >
-            <Nav.Item as="li" className="w-100">
-              <Button
-                type="button"
-                className="w-100 rounded-0 text-start"
-                variant="secondary"
-              >
-                <span className="me-1">#</span>
-                general
-              </Button>
-            </Nav.Item>
-            <Nav.Item as="li" className="w-100">
-              <Button
-                type="button"
-                className="w-100 rounded-0 text-start"
-                variant="light"
-              >
-                <span className="me-1">#</span>
-                random
-              </Button>
-            </Nav.Item>
+            {renderChannels()}
           </Nav>
         </Col>
         <Col className="p-0 h-100">
           <div className="d-flex flex-column h-100">
             <div className="bg-light mb-4 p-3 shadow-sm small">
               <p className="m-0">
-                <b># general</b>
+                <b># {ActiveChannelForTitle.name}</b>
               </p>
-              <span className="text-muted">0 сообщений</span>
+              <span className="text-muted">{filteredMessage.length} сообщений</span>
             </div>
-            <div
-              id="messages-box"
-              className="chat-messages overflow-auto px-5"
-            ></div>
+            {renderMessages()}
             <div className="mt-auto px-5 py-3">
               <Form noValidate className="py-1 border rounded-2">
                 <InputGroup className="has-validation">
