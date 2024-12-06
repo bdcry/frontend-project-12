@@ -1,6 +1,40 @@
+import axios from 'axios';
 import { Col, Container, Row, Button, Nav, Form, InputGroup } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+
+// Todo создать слайсы с использованием миддлвары для того, чтобы избавиться от фетч запросов внутри файла с компонентом и использовать только хуки сторедж
+
+const fetchChatData = async (token) => {
+  try {
+    const [channelsResponse, messagesResponse] = await Promise.all([
+      axios.get('/api/v1/channels', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      axios.get('/api/v1/messages', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    ]);
+
+    const channels = channelsResponse.data;
+    const messages = messagesResponse.data;
+
+    console.log('Каналы', channels);
+    console.log('Сообщения', messages);
+    return { channels, messages };
+  } catch (error) {
+    console.log('Ошибка при загрузке данных чата', error);
+  }
+};
 
 const Chat = () => {
+  const token = useSelector(({ auth }) => auth.token);
+  const fetchedData = fetchChatData(token);
+  console.log(fetchedData);
+
   return (
     <Container className="h-100 my-4 overflow-hidden rounded shadow">
       <Row className="h-100 bg-white flex-md-row">
@@ -75,7 +109,7 @@ const Chat = () => {
                     aria-label="Новое сообщение"
                     placeholder="Введите сообщение..."
                     className="border-0 p-0 ps-2"
-                    value=""
+                    // value=""
                   />
                   <Button
                     type="submit"
