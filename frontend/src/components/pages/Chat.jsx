@@ -1,39 +1,17 @@
-import axios from 'axios';
+import { useEffect } from 'react';
 import { Col, Container, Row, Button, Nav, Form, InputGroup } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
-
-// Todo создать слайсы с использованием миддлвары для того, чтобы избавиться от фетч запросов внутри файла с компонентом и использовать только хуки сторедж
-
-const fetchChatData = async (token) => {
-  try {
-    const [channelsResponse, messagesResponse] = await Promise.all([
-      axios.get('/api/v1/channels', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }),
-      axios.get('/api/v1/messages', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }),
-    ]);
-
-    const channels = channelsResponse.data;
-    const messages = messagesResponse.data;
-
-    console.log('Каналы', channels);
-    console.log('Сообщения', messages);
-    return { channels, messages };
-  } catch (error) {
-    console.log('Ошибка при загрузке данных чата', error);
-  }
-};
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchChannelsByToken } from '../../slices/channelsSlice';
+import { fetchmessagesByToken } from '../../slices/messagesSlice';
 
 const Chat = () => {
   const token = useSelector(({ auth }) => auth.token);
-  const fetchedData = fetchChatData(token);
-  console.log(fetchedData);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchChannelsByToken(token));
+    dispatch(fetchmessagesByToken(token));
+  }, [dispatch, token]);
 
   return (
     <Container className="h-100 my-4 overflow-hidden rounded shadow">
