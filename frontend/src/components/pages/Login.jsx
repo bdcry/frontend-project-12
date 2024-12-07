@@ -12,9 +12,9 @@ const handleSubmit = async (values, navigate, setStatus, dispatch) => {
       username: values.username,
       password: values.password,
      });
-    console.log(response.data)
     const token = response.data.token;
-    dispatch(loginSuccess(token));
+    const username = response.data.username;
+    dispatch(loginSuccess({ token, username }));
     setStatus();
     navigate('/');
   } catch (error) {
