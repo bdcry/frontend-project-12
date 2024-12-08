@@ -5,10 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../../store/slices/authSlice';
 import avatar from '../../assets/avatar-DIE1AEpS.jpg';
+import { BASE_API_URL } from '../../utils/routes';
 
 const handleSubmit = async (values, navigate, setStatus, dispatch) => {
   try {
-    const response = await axios.post('/api/v1/login', {
+    const response = await axios.post(`${BASE_API_URL}/login`, {
       username: values.username,
       password: values.password,
      });

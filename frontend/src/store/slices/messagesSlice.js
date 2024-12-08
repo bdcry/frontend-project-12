@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { BASE_API_URL } from '../../utils/routes';
 
 export const fetchMessagesByToken = createAsyncThunk(
   'messages/fetchMessagesByToken',
   async (token) => {
-    const response = await axios.get('/api/v1/messages', {
+    const response = await axios.get(`${BASE_API_URL}/messages`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
@@ -14,7 +15,7 @@ export const fetchMessagesByToken = createAsyncThunk(
 export const sendMessagesByToken = createAsyncThunk(
   'messages/sendMessagesByToken',
   async ({ token, newMessage }) => {
-    const response = await axios.post('/api/v1/messages', newMessage, {
+    const response = await axios.post(`${BASE_API_URL}/messages`, newMessage, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;

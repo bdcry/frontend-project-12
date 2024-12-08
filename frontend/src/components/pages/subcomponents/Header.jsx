@@ -1,6 +1,6 @@
-import { Button } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../../store/slices/authSlice";
+import { Button } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../../store/slices/authSlice';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -9,8 +9,18 @@ const Header = () => {
   const renderLogoutButton = () => {
     if (isLoggedIn) {
       return (
-        <Button type="button" onClick={() => dispatch(logout(null))}>Выйти</Button>
-      )
+        <Button type="button" onClick={() => dispatch(logout(null))}>
+          Выйти
+        </Button>
+      );
+    }
+  };
+
+  const renderChatLink = () => {
+    if (isLoggedIn) {
+      return (
+        <a href='/' className='navbar-brand'>Чаты</a>
+      );
     }
   };
 
@@ -20,6 +30,7 @@ const Header = () => {
         <a href="/login" className="navbar-brand">
           Hexlet Chat
         </a>
+        {renderChatLink()}
         {renderLogoutButton()}
       </div>
     </nav>
