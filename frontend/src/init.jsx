@@ -3,9 +3,17 @@ import { I18nextProvider, initReactI18next } from 'react-i18next';
 import App from './components/App';
 import resources from './locales/index.js';
 import { Provider } from 'react-redux';
-import store from './slices/index.js'
+import store from './store/index.js'
+import { io } from 'socket.io-client'
+import { addMessage } from './store/slices/messagesSlice.js';
 
 const init = async () => {
+  const socket = io();
+
+  socket.on('newMessage', (payload) => {
+    store.dispatch(addMessage(payload));
+  });
+
   const i18n = i18next.createInstance();
 
   await i18n
@@ -14,7 +22,8 @@ const init = async () => {
       resources,
       fallbackLng: 'ru',
     });
-
+    
+    
   return (
     <Provider store={store}>
       <I18nextProvider i18n={i18n}>

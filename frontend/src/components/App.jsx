@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Header from './pages/pages-components/Header.jsx';
+import Header from './pages/subcomponents/Header.jsx';
 import Login from './pages/Login.jsx'
 import Page404 from './pages/Page404.jsx';
 import ProtectedRoutes from '../utils/ProtectedRoutes.jsx';

@@ -24,7 +24,11 @@ export const sendMessagesByToken = createAsyncThunk(
 const messagesSlice = createSlice({
   name: 'messages',
   initialState: { messagesData: [], loadingStatus: 'idle', error: null },
-  reducers: {},
+  reducers: {
+    addMessage: (state, action) => {
+      state.messagesData.push(action.payload);
+    }
+  },
   extraReducers: (builder) => {
     builder
     // Получение сообщений
@@ -46,8 +50,7 @@ const messagesSlice = createSlice({
       state.loadingStatus = 'loading';
       state.error = null;
     })
-    .addCase(sendMessagesByToken.fulfilled, (state, action) => {
-      state.messagesData.push(action.payload);
+    .addCase(sendMessagesByToken.fulfilled, (state) => {
       state.loadingStatus = 'idle';
       state.error = null;
     })
@@ -59,3 +62,4 @@ const messagesSlice = createSlice({
 });
 
 export default messagesSlice.reducer;
+export const { addMessage } = messagesSlice.actions;

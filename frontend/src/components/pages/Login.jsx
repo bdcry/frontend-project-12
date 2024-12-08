@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { loginSuccess } from '../../slices/authSlice';
+import { loginSuccess } from '../../store/slices/authSlice';
 import avatar from '../../assets/avatar-DIE1AEpS.jpg';
 
 const handleSubmit = async (values, navigate, setStatus, dispatch) => {

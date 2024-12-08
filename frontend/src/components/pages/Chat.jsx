@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { Col, Container, Row, Button, Nav } from 'react-bootstrap';
-import MessageForm from './pages-components/MessageForm';
+import MessageForm from './subcomponents/MessageForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchChannelsByToken } from '../../slices/channelsSlice';
-import { fetchMessagesByToken } from '../../slices/messagesSlice';
-import { selectActiveTab } from '../../slices/channelsSlice';
+import { fetchChannelsByToken } from '../../store/slices/channelsSlice';
+import { fetchMessagesByToken } from '../../store/slices/messagesSlice';
+import { selectActiveTab } from '../../store/slices/channelsSlice';
 
 const Chat = () => {
   const dispatch = useDispatch();

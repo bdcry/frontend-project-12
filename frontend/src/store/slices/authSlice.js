@@ -24,12 +24,9 @@ const authSlice = createSlice({
       state.username = action.payload;
       state.isLoggedIn = false;
       localStorage.clear();
-    }
+    },
   },
 });
 
 export const { loginSuccess, logout } = authSlice.actions;
 export default authSlice.reducer;
-
-
-// тестовое сообщение через форму отправки без использования websocket :)

@@ -1,7 +1,7 @@
 import { Form, Button, InputGroup } from "react-bootstrap";
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from "react-redux";
-import { sendMessagesByToken } from "../../../slices/messagesSlice";
+import { sendMessagesByToken } from "../../../store/slices/messagesSlice";
 
 const handleSubmit = (values, setStatus, activeChannelId, username, token, dispatch, resetForm) => {
   const newMessage = {
