@@ -3,9 +3,10 @@ import { I18nextProvider, initReactI18next } from 'react-i18next';
 import App from './components/App';
 import resources from './locales/index.js';
 import { Provider } from 'react-redux';
-import store from './store/index.js'
-import { io } from 'socket.io-client'
+import store from './store/index.js';
+import { io } from 'socket.io-client';
 import { addMessage } from './store/slices/messagesSlice.js';
+import { addChannel } from './store/slices/channelsSlice.js';
 
 const init = async () => {
   const socket = io();
@@ -14,16 +15,17 @@ const init = async () => {
     store.dispatch(addMessage(payload));
   });
 
+  socket.on('newChannel', (payload) => {
+    store.dispatch(addChannel(payload));
+  });
+
   const i18n = i18next.createInstance();
 
-  await i18n
-    .use(initReactI18next)
-    .init({
-      resources,
-      fallbackLng: 'ru',
-    });
-    
-    
+  await i18n.use(initReactI18next).init({
+    resources,
+    fallbackLng: 'ru',
+  });
+
   return (
     <Provider store={store}>
       <I18nextProvider i18n={i18n}>

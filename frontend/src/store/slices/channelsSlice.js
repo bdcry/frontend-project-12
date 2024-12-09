@@ -29,6 +29,9 @@ const channelsSlice = createSlice({
     selectActiveTab: (state, action) => {
       state.activeChannelId = action.payload;
     },
+    addChannel: (state, action) => {
+      state.channelsData.push(action.payload);
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -52,7 +55,6 @@ const channelsSlice = createSlice({
         state.error = null;
       })
       .addCase(createChannelsByToken.fulfilled, (state, { payload }) => {
-        state.channelsData.push({ id: payload.id, name: payload.name, removable: payload.removable });
         state.activeChannelId = payload.id;
         state.loadingStatus = 'idle';
         state.error = null;
@@ -65,4 +67,4 @@ const channelsSlice = createSlice({
 });
 
 export default channelsSlice.reducer;
-export const { selectActiveTab } = channelsSlice.actions;
+export const { selectActiveTab, addChannel } = channelsSlice.actions;

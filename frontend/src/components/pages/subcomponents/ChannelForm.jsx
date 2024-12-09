@@ -7,7 +7,7 @@ import { createChannelsByToken } from '../../../store/slices/channelsSlice';
 
 const ChannelForm = () => {
   const dispatch = useDispatch();
-  const token = useSelector(({ auth  }) => auth.token);
+  const token = useSelector(({ auth }) => auth.token);
   const channels = useSelector(({ channels }) => channels.channelsData);
   const formik = useFormik({
     initialValues: {
@@ -17,8 +17,8 @@ const ChannelForm = () => {
     onSubmit: (values, { resetForm }) => {
       const newChannel = {
         name: values.name,
-      }
-      dispatch(createChannelsByToken({ token, newChannel }))
+      };
+      dispatch(createChannelsByToken({ token, newChannel }));
       dispatch(setStatusChannelModal(false));
       resetForm();
     },
@@ -38,7 +38,7 @@ const ChannelForm = () => {
           Имя канала
         </label>
         {formik.errors.name && (
-          <Form.Control.Feedback type='invalid'>
+          <Form.Control.Feedback type="invalid">
             {formik.errors.name}
           </Form.Control.Feedback>
         )}
