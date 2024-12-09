@@ -19,7 +19,7 @@ const ChannelForm = () => {
         name: values.name,
       };
       dispatch(createChannelsByToken({ token, newChannel }));
-      dispatch(setStatusChannelModal(false));
+      dispatch(setStatusChannelModal({ modalName: 'addChannelModal', status: false }));
       resetForm();
     },
   });
@@ -46,7 +46,7 @@ const ChannelForm = () => {
           <Button
             variant="secondary"
             className="me-2"
-            onClick={() => dispatch(setStatusChannelModal(false))}
+            onClick={() => dispatch(setStatusChannelModal({ modalName: 'addChannelModal', status: false }))}
           >
             Отменить
           </Button>

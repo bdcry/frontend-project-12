@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const modalsSlice = createSlice({
-  name: 'modals',
-  initialState: { addChannelModal: false },
+  name: 'ui',
+  initialState: { modals: {  addChannelModal: false, removeChannelModal: false } },
   reducers: {
-    setStatusChannelModal: (state, action) => {
-      state.addChannelModal = action.payload;
+    setStatusChannelModal: (state, { payload }) => {
+      const {modalName, status} = payload;
+      state.modals[modalName] = status;
     },
   },
 });

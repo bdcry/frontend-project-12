@@ -9,6 +9,6 @@ export default configureStore({
     auth: authReducer,
     channels: channelsReducer,
     messages: messagesReducer,
-    modals: modalsReducer,
+    ui: modalsReducer,
   }
 })
