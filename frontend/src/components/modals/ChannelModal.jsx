@@ -1,8 +1,11 @@
-import { useState } from 'react';
-import { Button, Modal, Form } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { setStatusChannelModal } from '../../store/slices/modalsSlice';
+import ChannelForm from '../pages/subcomponents/ChannelForm';
 
 const ChannelModal = () => {
-  const [show, setShow] = useState(false);
+  const dispatch = useDispatch();
+  const modalStatus = useSelector(({ modals }) => modals.addChannelModal);
 
   return (
     <>
@@ -10,7 +13,7 @@ const ChannelModal = () => {
         type="button"
         variant="link"
         className="p-0 text-primary btn-group-vertical"
-        onClick={() => setShow(true)}
+        onClick={() => dispatch(setStatusChannelModal(true))}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -25,8 +28,8 @@ const ChannelModal = () => {
         <span className="visually-hidden">Добавить канал</span>
       </Button>
       <Modal
-        show={show}
-        onHide={() => setShow(false)}
+        show={modalStatus}
+        onHide={() => dispatch(setStatusChannelModal(false))}
         dialogClassName="modal-dialog-centered"
       >
         <Modal.Header>
@@ -35,31 +38,11 @@ const ChannelModal = () => {
             aria-label="Close"
             data-bs-dismiss="modal"
             variant="close"
-            onClick={() => setShow(false)}
+            onClick={() => dispatch(setStatusChannelModal(false))}
           ></Button>
         </Modal.Header>
         <Modal.Body>
-          <Form>
-            <Form.Group>
-              <Form.Control
-                name="name"
-                id="name"
-                className="mb-2"
-                value="тут из формика возьмем валуе"
-              ></Form.Control>
-              <label className="visually-hidden" htmlFor="name">
-                Имя канала
-              </label>
-              {/* Todo:  сделать вывод ошибки через формик в invalid-feedback */}
-              <div className="invalid-feedback"></div>
-              <div className="d-flex justify-content-end">
-                <Button variant="secondary" className="me-2" onClick={(() => setShow(false))}>
-                  Отменить
-                </Button>
-                <Button type="submit">Отправить</Button>
-              </div>
-            </Form.Group>
-          </Form>
+          <ChannelForm />
         </Modal.Body>
       </Modal>
     </>
