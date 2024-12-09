@@ -3,16 +3,6 @@ import { useFormik } from 'formik';
 import { useDispatch, useSelector } from "react-redux";
 import { sendMessagesByToken } from "../../../store/slices/messagesSlice";
 
-const handleSubmit = (values, setStatus, activeChannelId, username, token, dispatch, resetForm) => {
-  const newMessage = {
-    body: values.body,
-    channelId: activeChannelId,
-    username: username,
-  };
-  dispatch(sendMessagesByToken({ token, newMessage }));
-  resetForm();
-}
-
 const MessageForm = () => {
   const dispatch = useDispatch();
   const token = useSelector(({ auth }) => auth.token);
@@ -23,7 +13,15 @@ const MessageForm = () => {
     initialValues: {
       body: '',
     },
-    onSubmit: (values, { setStatus, resetForm }) => handleSubmit(values, setStatus, activeChannelId, username, token, dispatch, resetForm),
+    onSubmit: (values, { resetForm }) => {
+      const newMessage = {
+        body: values.body,
+        channelId: activeChannelId,
+        username: username,
+      };
+      dispatch(sendMessagesByToken({ token, newMessage }));
+      resetForm();
+    },
   });
 
   return (

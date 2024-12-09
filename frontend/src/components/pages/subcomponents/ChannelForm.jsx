@@ -1,21 +1,28 @@
 import { Button, Form } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setStatusChannelModal } from '../../../store/slices/modalsSlice';
 import { useFormik } from 'formik';
-import addChannelSchema from '../../../utils/validation/validationForm';
+import createAddChannelSchema from '../../../utils/validation/validationForm';
+import { createChannelsByToken } from '../../../store/slices/channelsSlice';
 
 const ChannelForm = () => {
+  const dispatch = useDispatch();
+  const token = useSelector(({ auth  }) => auth.token);
+  const channels = useSelector(({ channels }) => channels.channelsData);
   const formik = useFormik({
     initialValues: {
       name: '',
     },
-    validationSchema: addChannelSchema,
+    validationSchema: createAddChannelSchema(channels),
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
+      const newChannel = {
+        name: values.name,
+      }
+      dispatch(createChannelsByToken({ token, newChannel }))
+      dispatch(setStatusChannelModal(false));
       resetForm();
     },
   });
-  const dispatch = useDispatch();
   return (
     <Form onSubmit={formik.handleSubmit}>
       <Form.Group>
@@ -35,9 +42,6 @@ const ChannelForm = () => {
             {formik.errors.name}
           </Form.Control.Feedback>
         )}
-        {/* <Form.Control.Feedback type="invalid">
-          инвалид
-        </Form.Control.Feedback> */}
         <div className="d-flex justify-content-end">
           <Button
             variant="secondary"

@@ -12,9 +12,19 @@ export const fetchChannelsByToken = createAsyncThunk(
   }
 );
 
+export const createChannelsByToken = createAsyncThunk(
+  'messages/createChannelsByToken',
+  async ({ token, newChannel }) => {
+    const response = await axios.post(`${BASE_API_URL}/channels`, newChannel, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  }
+)
+
 const channelsSlice = createSlice({
   name: 'channels',
-  initialState: { channelsData: [], activeChannelId: null, loadingStatus: 'idle', error: null },
+  initialState: { channelsData: [], activeChannelId: '1', loadingStatus: 'idle', error: null },
   reducers: {
     selectActiveTab: (state, action) => {
       state.activeChannelId = action.payload;
@@ -22,6 +32,7 @@ const channelsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // Получение каналов
       .addCase(fetchChannelsByToken.pending, (state) => {
         state.loadingStatus = 'loading';
         state.error = null;
@@ -30,15 +41,26 @@ const channelsSlice = createSlice({
         state.channelsData = payload;
         state.loadingStatus = 'idle';
         state.error = null;
-
-        if (payload.length > 0) {
-          state.activeChannelId = payload[0].id;
-        }
       })
       .addCase(fetchChannelsByToken.rejected, (state, action) => {
         state.loadingStatus = 'rejected';
         state.error = action.error;
-      });
+      })
+      // Добавление каналов
+      .addCase(createChannelsByToken.pending, (state) => {
+        state.loadingStatus = 'loading';
+        state.error = null;
+      })
+      .addCase(createChannelsByToken.fulfilled, (state, { payload }) => {
+        state.channelsData.push({ id: payload.id, name: payload.name, removable: payload.removable });
+        state.activeChannelId = payload.id;
+        state.loadingStatus = 'idle';
+        state.error = null;
+      })
+      .addCase(createChannelsByToken.rejected, (state, action) => {
+        state.loadingStatus = 'rejected';
+        state.error = action.error;
+      })
   },
 });
 
