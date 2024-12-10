@@ -5,7 +5,7 @@ const modalsSlice = createSlice({
   initialState: { modals: {  addChannelModal: false, removeChannelModal: false } },
   reducers: {
     setStatusChannelModal: (state, { payload }) => {
-      const {modalName, status} = payload;
+      const { modalName, status } = payload;
       state.modals[modalName] = status;
     },
   },

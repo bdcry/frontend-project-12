@@ -13,14 +13,24 @@ export const fetchChannelsByToken = createAsyncThunk(
 );
 
 export const createChannelsByToken = createAsyncThunk(
-  'messages/createChannelsByToken',
+  'channels/createChannelsByToken',
   async ({ token, newChannel }) => {
     const response = await axios.post(`${BASE_API_URL}/channels`, newChannel, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
   }
-)
+);
+
+export const removeChannelById = createAsyncThunk(
+  'channels/removeChannelById',
+  async ({ token, id }) => {
+    const response = await axios.delete(`${BASE_API_URL}/channels/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  }
+);
 
 const channelsSlice = createSlice({
   name: 'channels',
@@ -60,6 +70,21 @@ const channelsSlice = createSlice({
         state.error = null;
       })
       .addCase(createChannelsByToken.rejected, (state, action) => {
+        state.loadingStatus = 'rejected';
+        state.error = action.error;
+      })
+      // Удаление канала
+      .addCase(removeChannelById.pending, (state) => {
+        state.loadingStatus = 'loading';
+        state.error = null;
+      })
+      .addCase(removeChannelById.fulfilled, (state,  { payload }) => {
+        state.channelsData = state.channelsData.filter((channel) => channel.id !== payload.id);
+        state.activeChannelId = '1';
+        state.loadingStatus = 'idle';
+        state.error = null;
+      })
+      .addCase(removeChannelById.rejected, (state, action) => {
         state.loadingStatus = 'rejected';
         state.error = action.error;
       })
