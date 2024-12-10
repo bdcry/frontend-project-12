@@ -41,6 +41,9 @@ const channelsSlice = createSlice({
     },
     addChannel: (state, action) => {
       state.channelsData.push(action.payload);
+    },
+    removeChannel: (state, action) => {
+      state.channelsData = state.channelsData.filter((channel) => channel.id !== action.payload.id)
     }
   },
   extraReducers: (builder) => {
@@ -92,4 +95,4 @@ const channelsSlice = createSlice({
 });
 
 export default channelsSlice.reducer;
-export const { selectActiveTab, addChannel } = channelsSlice.actions;
+export const { selectActiveTab, addChannel, removeChannel } = channelsSlice.actions;

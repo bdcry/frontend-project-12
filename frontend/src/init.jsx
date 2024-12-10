@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import store from './store/index.js';
 import { io } from 'socket.io-client';
 import { addMessage } from './store/slices/messagesSlice.js';
-import { addChannel } from './store/slices/channelsSlice.js';
+import { addChannel, removeChannel } from './store/slices/channelsSlice.js';
 
 const init = async () => {
   const socket = io();
@@ -17,6 +17,11 @@ const init = async () => {
 
   socket.on('newChannel', (payload) => {
     store.dispatch(addChannel(payload));
+  });
+
+  // subscribe remove channel
+  socket.on('removeChannel', (payload) => {
+    store.dispatch(removeChannel(payload));
   });
 
   const i18n = i18next.createInstance();

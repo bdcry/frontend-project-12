@@ -7,40 +7,46 @@ const ChannelsList = ({ data }) => {
   const dispatch = useDispatch();
   const { channels, activeChannelId } = data;
 
+  const renderNotRemovableChannels = (channel) =>
+    !channel.removable && (
+      <Button
+        type="button"
+        className="w-100 rounded-0 text-start text-truncate"
+        variant={channel.id === activeChannelId ? 'secondary' : ''}
+        onClick={() => dispatch(selectActiveTab(channel.id))}
+      >
+        <span className="me-1">#</span>
+        {channel.name}
+      </Button>
+    );
+
+  const renderRemovableChannels = (channel) => (
+    <Dropdown className="d-flex btn-group" role="group">
+      <Button
+        type="button"
+        className="w-100 rounded-0 text-start text-truncate"
+        variant={channel.id === activeChannelId ? 'secondary' : ''}
+        onClick={() => dispatch(selectActiveTab(channel.id))}
+      >
+        <span className="me-1">#</span>
+        {channel.name}
+      </Button>
+      <Dropdown.Toggle
+        variant={channel.id === activeChannelId ? 'secondary' : ''}
+        className="flex-grow-0 dropdown-toggle-split rounded-0"
+      ></Dropdown.Toggle>
+      <Dropdown.Menu>
+        <RemoveChannelModal channelId={channel.id} />
+        <Dropdown.Item href="#/action-2">Переименовать</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+  );
+
   return channels.map((channel) => (
     <Nav.Item as="li" className="w-100" key={channel.id}>
-      {!channel.removable && (
-        <Button
-            type="button"
-            className="w-100 rounded-0 text-start text-truncate"
-            variant={channel.id === activeChannelId ? 'secondary' : ''}
-            onClick={() => dispatch(selectActiveTab(channel.id))}
-          >
-            <span className="me-1">#</span>
-            {channel.name}
-          </Button>
-      )}
-      {channel.removable && (
-        <Dropdown className="d-flex btn-group" role="group">
-          <Button
-            type="button"
-            className="w-100 rounded-0 text-start text-truncate"
-            variant={channel.id === activeChannelId ? 'secondary' : ''}
-            onClick={() => dispatch(selectActiveTab(channel.id))}
-          >
-            <span className="me-1">#</span>
-            {channel.name}
-          </Button>
-          <Dropdown.Toggle
-            variant={channel.id === activeChannelId ? 'secondary' : ''}
-            className="flex-grow-0 dropdown-toggle-split rounded-0"
-          ></Dropdown.Toggle>
-          <Dropdown.Menu>
-            <RemoveChannelModal channelId={channel.id} />
-            <Dropdown.Item href="#/action-2">Переименовать</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-      )}
+      {channel.removable
+        ? renderRemovableChannels(channel)
+        : renderNotRemovableChannels(channel)}
     </Nav.Item>
   ));
 };
