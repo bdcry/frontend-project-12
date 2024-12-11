@@ -1,6 +1,8 @@
 import * as yup from 'yup';
+import i18next from 'i18next';
 
 export const channelSchema = (channels, currentChannelName = '') => {
+  const t = i18next.t;
   const createdChannels = channels
     .map(({ name }) => name)
     .filter((name) => name !== currentChannelName);
@@ -8,30 +10,31 @@ export const channelSchema = (channels, currentChannelName = '') => {
   return yup.object().shape({
     name: yup
       .string()
-      .required('Обязательное поле')
-      .min(3, 'От 3 до 20 символов')
-      .max(20, 'От 3 до 20 символов')
-      .notOneOf([...createdChannels], 'Должно быть уникальным'),
+      .required(t('validation.required'))
+      .min(3, t('validation.channelNameLength'))
+      .max(20, t('validation.channelNameLength'))
+      .notOneOf([...createdChannels], t('validation.uniqueChannel')),
   });
 };
 
 export const signupSchema = () => {
+  const t = i18next.t; // Получаем функцию перевода
+
   return yup.object().shape({
     username: yup
       .string()
-      .required('Обязательное поле')
-      .min(3, 'От 3 до 20 символов')
-      .max(20, 'От 3 до 20 символов'),
+      .required(t('validation.required'))
+      .min(3, t('validation.usernameLength'))
+      .max(20, t('validation.usernameLength')),
     password: yup
       .string()
-      .required('Обязательное поле')
-      .min(6, 'Не менее 6 символов'),
+      .required(t('validation.required'))
+      .min(6, t('validation.passwordLength')),
     confirmPassword: yup
       .string()
-      .required('Обязательное поле')
-      .oneOf([yup.ref('password')], 'Пароли должны совпадать')
-  })
+      .required(t('validation.required'))
+      .oneOf([yup.ref('password')], t('validation.passwordMatch')),
+  });
 };
-
 
 // TODO: создать валидацию для формы логина

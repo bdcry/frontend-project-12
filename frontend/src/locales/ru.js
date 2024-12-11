@@ -65,5 +65,13 @@ export default {
       description: 'Но вы можете перейти',
       link: 'на главную страницу',
     },
+    validation: {
+      required: 'Обязательное поле',
+      channelNameLength: 'От 3 до 20 символов',
+      uniqueChannel: 'Должно быть уникальным',
+      usernameLength: 'От 3 до 20 символов',
+      passwordLength: 'Не менее 6 символов',
+      passwordMatch: 'Пароли должны совпадать',
+    },    
   }
 };

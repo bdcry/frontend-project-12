@@ -64,5 +64,13 @@ export default {
       description: 'But you can go',
       link: 'to the main page',
     },
+    validation: {
+      required: 'This field is required',
+      channelNameLength: 'From 3 to 20 characters',
+      uniqueChannel: 'Must be unique',
+      usernameLength: 'From 3 to 20 characters',
+      passwordLength: 'At least 6 characters',
+      passwordMatch: 'Passwords must match',
+    },    
   },
 };
