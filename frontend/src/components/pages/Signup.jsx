@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import avatar from '../../assets/avatar_1-D7Cot-zE.jpg';
 import { useFormik } from 'formik';
 import { signupSchema } from '../../utils/validation/validationForm';
+import { signupUser } from '../../store/slices/authSlice';
 
 const SignupForm = () => {
   const navigate = useNavigate();
@@ -15,8 +16,18 @@ const SignupForm = () => {
       confirmPassword: '',
     },
     validationSchema: signupSchema(),
-    onSubmit: (values) => {
+    onSubmit: async (values, { setFieldError }) => {
       console.log(values);
+      const { username, password } = values;
+      const resultAction = await dispatch(signupUser({ username, password }));
+
+      if (signupUser.fulfilled.type === resultAction.type) {
+        navigate('/');
+      }
+  
+      if (signupUser.rejected.type === resultAction.type && resultAction.error.message.includes('409')) {
+        setFieldError('username', 'Такой пользователь уже существует');
+      }
     },
   });
 
