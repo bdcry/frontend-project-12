@@ -15,7 +15,7 @@ const ChannelForm = () => {
     initialValues: {
       name: '',
     },
-    validationSchema: channelSchema(channels),
+    validationSchema: channelSchema(channels, t),
     onSubmit: (values, { resetForm }) => {
       const newChannel = {
         name: values.name,

@@ -17,7 +17,7 @@ const SignupForm = () => {
       password: '',
       confirmPassword: '',
     },
-    validationSchema: signupSchema(),
+    validationSchema: signupSchema(t),
     onSubmit: async (values, { setFieldError }) => {
       const { username, password } = values;
       const resultAction = await dispatch(signupUser({ username, password }));

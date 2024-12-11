@@ -19,7 +19,7 @@ const RenameChannelModal = () => {
     initialValues: {
       name: channel.name,
     },
-    validationSchema: channelSchema(channels, channel.name),
+    validationSchema: channelSchema(channels, t, channel.name),
     onSubmit: (values, { resetForm }) => {
       const editedChannel = { name: values.name };
       dispatch(renameChannelById({ token, id: channel.id, editedChannel }));

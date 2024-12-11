@@ -1,8 +1,6 @@
 import * as yup from 'yup';
-import i18next from 'i18next';
 
-export const channelSchema = (channels, currentChannelName = '') => {
-  const t = i18next.t;
+export const channelSchema = (channels, t, currentChannelName = '') => {
   const createdChannels = channels
     .map(({ name }) => name)
     .filter((name) => name !== currentChannelName);
@@ -17,9 +15,7 @@ export const channelSchema = (channels, currentChannelName = '') => {
   });
 };
 
-export const signupSchema = () => {
-  const t = i18next.t; // Получаем функцию перевода
-
+export const signupSchema = (t) => {
   return yup.object().shape({
     username: yup
       .string()
@@ -36,5 +32,6 @@ export const signupSchema = () => {
       .oneOf([yup.ref('password')], t('validation.passwordMatch')),
   });
 };
+
 
 // TODO: создать валидацию для формы логина
