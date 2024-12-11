@@ -13,7 +13,6 @@ const getInitialState = () => {
 export const signupUser = createAsyncThunk(
   'auth/signupUser',
   async({ username, password }) => {
-    console.log(username, password)
     const response = await axios.post(`${BASE_API_URL}/signup`, { username, password });
     return response.data;
   }

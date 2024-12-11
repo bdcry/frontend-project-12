@@ -30,9 +30,13 @@ const init = async () => {
 
   const i18n = i18next.createInstance();
 
+  const state = store.getState();
+  const currentLanguage = state.language.currnetLanguage;
+
   await i18n.use(initReactI18next).init({
     resources,
     fallbackLng: 'ru',
+    lng: currentLanguage,
   });
 
   return (

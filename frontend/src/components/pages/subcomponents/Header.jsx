@@ -1,16 +1,20 @@
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../../store/slices/authSlice';
+import { useTranslation } from 'react-i18next';
+import { changeLanguage } from '../../../store/slices/languageSlice';
 
 const Header = () => {
   const dispatch = useDispatch();
+  const { t, i18n } = useTranslation();
   const isLoggedIn = useSelector(({ auth }) => auth.isLoggedIn);
+  const currentLanguage = useSelector(({ language }) => language.currentLanguage);
 
   const renderLogoutButton = () => {
     if (isLoggedIn) {
       return (
         <Button type="button" onClick={() => dispatch(logout(null))}>
-          Выйти
+          {t('header.logout')}
         </Button>
       );
     }
@@ -19,19 +23,53 @@ const Header = () => {
   const renderChatLink = () => {
     if (isLoggedIn) {
       return (
-        <a href='/' className='navbar-brand'>Чаты</a>
+        <a href="/" className="navbar-brand">
+          {t('header.chat')}
+        </a>
       );
     }
   };
 
+  const renderLanguageButtons = () => {
+    const languages = [
+      { label: 'Русский', code: 'ru' },
+      { label: 'English', code: 'en' },
+    ];
+  
+    const handleChangeLanguage = (lang) => {
+      i18n.changeLanguage(lang);
+      dispatch(changeLanguage(lang));
+    };
+  
+    return (
+      <div className="language-buttons me-2">
+        {languages.map(({ label, code }) => (
+          <Button
+            key={code}
+            type="button"
+            variant={`${currentLanguage === code ? 'secondary' : 'outline-secondary'} mx-1`}
+            onClick={() => handleChangeLanguage(code)}
+          >
+            {label}
+          </Button>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
-      <div className="container">
-        <a href="/login" className="navbar-brand">
-          Hexlet Chat
-        </a>
-        {renderChatLink()}
-        {renderLogoutButton()}
+      <div className="container d-flex justify-content-between align-items-center">
+        <div className="d-flex align-items-center">
+          <a href="/login" className="navbar-brand">
+            {t('header.title')}
+          </a>
+          {renderChatLink()}
+        </div>
+        <div className="d-flex align-items-center">
+          {renderLanguageButtons()}
+          {renderLogoutButton()}
+        </div>
       </div>
     </nav>
   );

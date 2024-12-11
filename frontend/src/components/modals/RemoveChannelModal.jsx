@@ -2,9 +2,11 @@ import { Button, Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { setStatusChannelModal } from '../../store/slices/modalsSlice';
 import { removeChannelById } from '../../store/slices/channelsSlice';
+import { useTranslation } from 'react-i18next';
 
 const RemoveChannelModal = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const token = useSelector(({ auth }) => auth.token);
   const modalStatus = useSelector(({ ui }) => ui.modals.removeChannelModal);
   const { activeChannelId } = useSelector(({ ui }) => ui.modals);
@@ -26,14 +28,14 @@ const RemoveChannelModal = () => {
         dispatch(
           setStatusChannelModal({
             modalName: 'removeChannelModal',
-            status: true,
+            status: false,
           })
         )
       }
       dialogClassName="modal-dialog-centered"
     >
       <Modal.Header>
-        <Modal.Title>Удалить канал</Modal.Title>
+        <Modal.Title>{t('removeChannelModal.title')}</Modal.Title>
         <Button
           aria-label="Close"
           data-bs-dismiss="modal"
@@ -49,7 +51,7 @@ const RemoveChannelModal = () => {
         ></Button>
       </Modal.Header>
       <Modal.Body>
-        <p className="lead">Уверены?</p>
+        <p className="lead">{t('removeChannelModal.body')}</p>
         <div className="d-flex justify-content-end">
           <Button
             variant="secondary"
@@ -63,10 +65,10 @@ const RemoveChannelModal = () => {
               )
             }
           >
-            Отменить
+            {t('removeChannelModal.cancel')}
           </Button>
           <Button type="submit" variant="danger" onClick={handleRemove}>
-            Удалить
+            {t('removeChannelModal.remove')}
           </Button>
         </div>
       </Modal.Body>

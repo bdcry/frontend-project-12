@@ -6,9 +6,11 @@ import { fetchChannelsByToken } from '../../store/slices/channelsSlice';
 import { fetchMessagesByToken } from '../../store/slices/messagesSlice';
 import AddChannelModal from '../modals/AddChannelModal';
 import ChannelsList from './subcomponents/ChannelsList';
+import { useTranslation } from 'react-i18next';
 
 const Chat = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const token = useSelector(({ auth }) => auth.token);
   const username = useSelector(({ auth }) => auth.username);
   const channels = useSelector(({ channels }) => channels.channelsData);
@@ -48,7 +50,7 @@ const Chat = () => {
           className="col-md-2 border-end px-0 bg-light flex-column h-100 d-flex"
         >
           <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
-            <b>Каналы</b>
+            <b>{t('chat.title')}</b>
             <AddChannelModal />
           </div>
           <Nav
@@ -66,7 +68,7 @@ const Chat = () => {
                 <b># {ActiveChannelForTitle.name}</b>
               </p>
               <span className="text-muted">
-                {filteredMessage.length} сообщений
+              {t('chat.messages_count', { count: filteredMessage.length })}
               </span>
             </div>
             {renderMessages()}

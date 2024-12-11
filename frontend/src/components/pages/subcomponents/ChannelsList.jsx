@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectActiveTab } from '../../../store/slices/channelsSlice';
 import { setStatusChannelModal } from '../../../store/slices/modalsSlice';
 import RenameChannelModal from '../../modals/RenameChannelModal';
-import RemoveChannelModal from '../../modals/RemoveChannelModal'
+import RemoveChannelModal from '../../modals/RemoveChannelModal';
+import { useTranslation } from 'react-i18next';
 
 const ChannelsList = ({ data }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { channels, activeChannelId } = data;
   const modals = useSelector(({ ui }) => ui.modals);
 
@@ -51,7 +53,7 @@ const ChannelsList = ({ data }) => {
             )
           }
         >
-          Удалить
+          {t('channelsList.remove')}
         </Dropdown.Item>
         <Dropdown.Item
           onClick={() =>
@@ -64,7 +66,7 @@ const ChannelsList = ({ data }) => {
             )
           }
         >
-          Переименовать
+          {t('channelsList.rename')}
         </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
