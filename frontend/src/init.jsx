@@ -5,7 +5,7 @@ import resources from './locales/index.js';
 import { Provider } from 'react-redux';
 import store from './store/index.js';
 import { io } from 'socket.io-client';
-import { addMessage } from './store/slices/messagesSlice.js';
+import { addMessage, removeMessageByChannelId } from './store/slices/messagesSlice.js';
 import { addChannel, removeChannel, renameChannel } from './store/slices/channelsSlice.js';
 
 const init = async () => {
@@ -21,6 +21,7 @@ const init = async () => {
 
   socket.on('removeChannel', (payload) => {
     store.dispatch(removeChannel(payload));
+    store.dispatch(removeMessageByChannelId(payload));
   });
 
   socket.on('renameChannel', (payload) => {
