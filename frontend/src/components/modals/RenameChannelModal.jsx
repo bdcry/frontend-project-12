@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setStatusChannelModal } from '../../store/slices/modalsSlice';
 import { renameChannelById } from '../../store/slices/channelsSlice';
 import { useFormik } from 'formik';
-import channelSchema from '../../utils/validation/validationForm';
+import { channelSchema } from '../../utils/validation/validationForm';
 
 const RenameChannelModal = () => {
   const dispatch = useDispatch();

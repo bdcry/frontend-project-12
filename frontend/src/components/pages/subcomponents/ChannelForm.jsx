@@ -2,7 +2,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { setStatusChannelModal } from '../../../store/slices/modalsSlice';
 import { useFormik } from 'formik';
-import createAddChannelSchema from '../../../utils/validation/validationForm';
+import {  channelSchema } from '../../../utils/validation/validationForm';
 import { createChannelsByToken } from '../../../store/slices/channelsSlice';
 
 const ChannelForm = () => {
@@ -13,7 +13,7 @@ const ChannelForm = () => {
     initialValues: {
       name: '',
     },
-    validationSchema: createAddChannelSchema(channels),
+    validationSchema: channelSchema(channels),
     onSubmit: (values, { resetForm }) => {
       const newChannel = {
         name: values.name,

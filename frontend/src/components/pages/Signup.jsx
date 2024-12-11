@@ -2,10 +2,23 @@ import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import avatar from '../../assets/avatar_1-D7Cot-zE.jpg';
+import { useFormik } from 'formik';
+import { signupSchema } from '../../utils/validation/validationForm';
 
 const SignupForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      password: '',
+      confirmPassword: '',
+    },
+    validationSchema: signupSchema(),
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
 
   return (
     <Container fluid className="h-100">
@@ -16,7 +29,7 @@ const SignupForm = () => {
               <Col className="col-12 col-md-6 d-flex align-items-center justify-content-center">
                 <img src={avatar} alt="Войти" className="rounded-circle" />
               </Col>
-              <Form className="w-50">
+              <Form className="w-50" onSubmit={formik.handleSubmit}>
                 <h1 className="text-center mb-4">Регистрация</h1>
                 <Form.Group className="form-floating mb-3" controlId="username">
                   <Form.Control
@@ -25,19 +38,19 @@ const SignupForm = () => {
                     placeholder="Имя пользователя"
                     name="username"
                     autoComplete="username"
+                    onChange={formik.handleChange}
+                    value={formik.values.username}
+                    isInvalid={formik.errors.username && formik.touched.username}
+                    onBlur={formik.handleBlur}
                     required
-                    // onChange={formik.handleChange}
-                    // value={formik.values.username}
-                    // isInvalid={formik.status}
+                    autoFocus
                   ></Form.Control>
                   <Form.Label>Имя пользователя</Form.Label>
-                  <Form.Control.Feedback
-                    type="invalid"
-                    className="d-block mb-3"
-                    tooltip
-                  >
-                    инвалид
-                  </Form.Control.Feedback>
+                  {formik.touched.username && formik.errors.username && (
+                    <Form.Control.Feedback type="invalid" tooltip>
+                      {formik.errors.username}
+                    </Form.Control.Feedback>
+                  )}
                 </Form.Group>
                 <Form.Group className="form-floating mb-3" controlId="password">
                   <Form.Control
@@ -46,19 +59,18 @@ const SignupForm = () => {
                     placeholder="Пароль"
                     name="password"
                     autoComplete="new-password"
+                    onChange={formik.handleChange}
+                    value={formik.values.password}
+                    isInvalid={formik.errors.password && formik.touched.password}
+                    onBlur={formik.handleBlur}
                     required
-                    // onChange={formik.handleChange}
-                    // value={formik.values.username}
-                    // isInvalid={formik.status}
                   ></Form.Control>
                   <Form.Label>Пароль</Form.Label>
-                  <Form.Control.Feedback
-                    type="invalid"
-                    className="d-block mb-3"
-                    tooltip
-                  >
-                    инвалид
-                  </Form.Control.Feedback>
+                  {formik.errors.password && (
+                    <Form.Control.Feedback type="invalid" tooltip>
+                      {formik.errors.password}
+                    </Form.Control.Feedback>
+                  )}
                 </Form.Group>
                 <Form.Group
                   className="form-floating mb-3"
@@ -70,19 +82,18 @@ const SignupForm = () => {
                     placeholder="Пароль"
                     name="confirmPassword"
                     autoComplete="new-password"
+                    onChange={formik.handleChange}
+                    value={formik.values.confirmPassword}
+                    isInvalid={formik.errors.confirmPassword && formik.touched.confirmPassword}
+                    onBlur={formik.handleBlur}
                     required
-                    // onChange={formik.handleChange}
-                    // value={formik.values.username}
-                    // isInvalid={formik.status}
                   ></Form.Control>
                   <Form.Label>Повторите пароль</Form.Label>
-                  <Form.Control.Feedback
-                    type="invalid"
-                    className="d-block mb-3"
-                    tooltip
-                  >
-                    инвалид
-                  </Form.Control.Feedback>
+                  {formik.errors.confirmPassword && (
+                    <Form.Control.Feedback type="invalid" tooltip>
+                      {formik.errors.confirmPassword}
+                    </Form.Control.Feedback>
+                  )}
                 </Form.Group>
                 <Button
                   type="submit"
