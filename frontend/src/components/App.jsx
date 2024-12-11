@@ -5,6 +5,7 @@ import Login from './pages/Login.jsx'
 import Page404 from './pages/Page404.jsx';
 import ProtectedRoutes from '../utils/ProtectedRoutes.jsx';
 import Chat from './pages/Chat.jsx';
+import SignupForm from './pages/Signup.jsx';
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path='/login' element={<Login />} />
+          <Route path='/signup' element={<SignupForm />} />
           <Route element={<ProtectedRoutes />}>
             <Route path='/' element={<Chat />} />
           </Route>
