@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { BASE_API_URL } from '../../utils/routes';
+import { removeChannelById } from './channelsSlice';
 
 export const fetchMessagesByToken = createAsyncThunk(
   'messages/fetchMessagesByToken',
@@ -59,6 +60,12 @@ const messagesSlice = createSlice({
       state.loadingStatus = 'rejected';
       state.error = action.error;
     })
+    // Удаление сообщений на основе удаленного канала
+    .addCase(removeChannelById.fulfilled, (state, { payload }) => {
+      const removedChannelId = payload.id;
+    
+      state.messagesData = state.messagesData.filter((message) => message.channelId !== removedChannelId);
+    });
   },
 });
 

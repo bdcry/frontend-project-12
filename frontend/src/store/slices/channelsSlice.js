@@ -62,17 +62,14 @@ const channelsSlice = createSlice({
       state.channelsData.push(payload);
     },
     removeChannel: (state, { payload }) => {
-      state.channelsData = state.channelsData.filter(
-        (channel) => channel.id !== payload.id
-      );
+      state.channelsData = state.channelsData.filter((channel) => channel.id !== payload.id);
+      if (state.activeChannelId === payload.id) {
+        state.activeChannelId = '1';
+      }
     },
     renameChannel: (state, { payload }) => {
-      const index = state.channelsData.findIndex(
-        (channel) => channel.id === payload.id
-      );
-      if (index !== -1) {
-        state.channelsData[index] = payload;
-      }
+      const index = state.channelsData.findIndex((channel) => channel.id === payload.id);
+      state.channelsData[index] = payload;
     },
   },
   extraReducers: (builder) => {
@@ -111,10 +108,10 @@ const channelsSlice = createSlice({
         state.error = null;
       })
       .addCase(removeChannelById.fulfilled, (state, { payload }) => {
-        state.channelsData = state.channelsData.filter(
-          (channel) => channel.id !== payload.id
-        );
-        state.activeChannelId = '1';
+        state.channelsData = state.channelsData.filter((channel) => channel.id !== payload.id);
+        if (state.activeChannelId === payload.id) {
+          state.activeChannelId = '1';
+        }
         state.loadingStatus = 'idle';
         state.error = null;
       })
@@ -128,12 +125,8 @@ const channelsSlice = createSlice({
         state.error = null;
       })
       .addCase(renameChannelById.fulfilled, (state, { payload }) => {
-        const index = state.channelsData.findIndex(
-          (channel) => channel.id === payload.id
-        );
-        if (index !== -1) {
+        const index = state.channelsData.findIndex((channel) => channel.id === payload.id);
           state.channelsData[index] = payload;
-        }
         state.loadingStatus = 'idle';
         state.error = null;
       })
