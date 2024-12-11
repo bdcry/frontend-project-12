@@ -32,19 +32,48 @@ export const removeChannelById = createAsyncThunk(
   }
 );
 
+export const renameChannelById = createAsyncThunk(
+  'channels/renameChannelById',
+  async ({ token, id, editedChannel }) => {
+    const response = await axios.patch(
+      `${BASE_API_URL}/channels/${id}`,
+      editedChannel,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    return response.data;
+  }
+);
+
 const channelsSlice = createSlice({
   name: 'channels',
-  initialState: { channelsData: [], activeChannelId: '1', loadingStatus: 'idle', error: null },
+  initialState: {
+    channelsData: [],
+    activeChannelId: '1',
+    loadingStatus: 'idle',
+    error: null,
+  },
   reducers: {
-    selectActiveTab: (state, action) => {
-      state.activeChannelId = action.payload;
+    selectActiveTab: (state, { payload }) => {
+      state.activeChannelId = payload;
     },
-    addChannel: (state, action) => {
-      state.channelsData.push(action.payload);
+    addChannel: (state, { payload }) => {
+      state.channelsData.push(payload);
     },
-    removeChannel: (state, action) => {
-      state.channelsData = state.channelsData.filter((channel) => channel.id !== action.payload.id)
-    }
+    removeChannel: (state, { payload }) => {
+      state.channelsData = state.channelsData.filter(
+        (channel) => channel.id !== payload.id
+      );
+    },
+    renameChannel: (state, { payload }) => {
+      const index = state.channelsData.findIndex(
+        (channel) => channel.id === payload.id
+      );
+      if (index !== -1) {
+        state.channelsData[index] = payload;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -81,8 +110,10 @@ const channelsSlice = createSlice({
         state.loadingStatus = 'loading';
         state.error = null;
       })
-      .addCase(removeChannelById.fulfilled, (state,  { payload }) => {
-        state.channelsData = state.channelsData.filter((channel) => channel.id !== payload.id);
+      .addCase(removeChannelById.fulfilled, (state, { payload }) => {
+        state.channelsData = state.channelsData.filter(
+          (channel) => channel.id !== payload.id
+        );
         state.activeChannelId = '1';
         state.loadingStatus = 'idle';
         state.error = null;
@@ -91,8 +122,27 @@ const channelsSlice = createSlice({
         state.loadingStatus = 'rejected';
         state.error = action.error;
       })
+      // Редактирование имени канала
+      .addCase(renameChannelById.pending, (state) => {
+        state.loadingStatus = 'loading';
+        state.error = null;
+      })
+      .addCase(renameChannelById.fulfilled, (state, { payload }) => {
+        const index = state.channelsData.findIndex(
+          (channel) => channel.id === payload.id
+        );
+        if (index !== -1) {
+          state.channelsData[index] = payload;
+        }
+        state.loadingStatus = 'idle';
+        state.error = null;
+      })
+      .addCase(renameChannelById.rejected, (state, action) => {
+        state.loadingStatus = 'rejected';
+        state.error = action.error.message;
+      });
   },
 });
 
 export default channelsSlice.reducer;
-export const { selectActiveTab, addChannel, removeChannel } = channelsSlice.actions;
+export const { selectActiveTab, addChannel, removeChannel, renameChannel } = channelsSlice.actions;

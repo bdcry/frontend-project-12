@@ -1,11 +1,15 @@
+import PropTypes from 'prop-types';
 import { Button, Nav, Dropdown } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectActiveTab } from '../../../store/slices/channelsSlice';
-import RemoveChannelModal from '../../modals/RemoveChannelModal';
+import { setStatusChannelModal } from '../../../store/slices/modalsSlice';
+import RenameChannelModal from '../../modals/RenameChannelModal';
+import RemoveChannelModal from '../../modals/RemoveChannelModal'
 
 const ChannelsList = ({ data }) => {
   const dispatch = useDispatch();
   const { channels, activeChannelId } = data;
+  const modals = useSelector(({ ui }) => ui.modals);
 
   const renderNotRemovableChannels = (channel) =>
     !channel.removable && (
@@ -36,19 +40,53 @@ const ChannelsList = ({ data }) => {
         className="flex-grow-0 dropdown-toggle-split rounded-0"
       ></Dropdown.Toggle>
       <Dropdown.Menu>
-        <RemoveChannelModal channelId={channel.id} />
-        <Dropdown.Item href="#/action-2">Переименовать</Dropdown.Item>
+        <Dropdown.Item
+          onClick={() =>
+            dispatch(
+              setStatusChannelModal({
+                modalName: 'removeChannelModal',
+                status: true,
+                channelId: channel.id,
+              })
+            )
+          }
+        >
+          Удалить
+        </Dropdown.Item>
+        <Dropdown.Item
+          onClick={() =>
+            dispatch(
+              setStatusChannelModal({
+                modalName: 'renameChannelModal',
+                status: true,
+                channelId: channel.id,
+              })
+            )
+          }
+        >
+          Переименовать
+        </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );
 
-  return channels.map((channel) => (
-    <Nav.Item as="li" className="w-100" key={channel.id}>
-      {channel.removable
-        ? renderRemovableChannels(channel)
-        : renderNotRemovableChannels(channel)}
-    </Nav.Item>
-  ));
+  return (
+    <>
+      {channels.map((channel) => (
+        <Nav.Item as="li" className="w-100" key={channel.id}>
+          {channel.removable
+            ? renderRemovableChannels(channel)
+            : renderNotRemovableChannels(channel)}
+        </Nav.Item>
+      ))}
+      {modals.removeChannelModal && <RemoveChannelModal />}
+      {modals.renameChannelModal && <RenameChannelModal />}
+    </>
+  );
+};
+
+ChannelsList.propTypes = {
+  data: PropTypes.object,
 };
 
 export default ChannelsList;

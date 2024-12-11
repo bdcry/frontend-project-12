@@ -20,7 +20,7 @@ export const sendMessagesByToken = createAsyncThunk(
     });
     return response.data;
   }
-)
+);
 
 const messagesSlice = createSlice({
   name: 'messages',
