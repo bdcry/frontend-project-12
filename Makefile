@@ -18,4 +18,4 @@ develop:
 	make start-backend & make start-frontend
 
 start:
-  npx start-server -s ./frontend/dist -p $$PORT --host 0.0.0.0
+	npx start-server -s ./frontend/dist -p $$PORT --host 0.0.0.0
