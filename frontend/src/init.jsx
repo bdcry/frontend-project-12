@@ -22,18 +22,18 @@ const init = async () => {
 
   socket.on('newChannel', (payload) => {
     store.dispatch(addChannel(payload));
-    toast.success(i18next.t('notifications.success.channelCreated'));
+    toast.success(i18n.t('notifications.success.channelCreated'));
   });
 
   socket.on('removeChannel', (payload) => {
     store.dispatch(removeChannel(payload));
     store.dispatch(removeMessageByChannelId(payload));
-    toast.success(i18next.t('notifications.success.channelRemoved'));
+    toast.success(i18n.t('notifications.success.channelRemoved'));
   });
 
   socket.on('renameChannel', (payload) => {
     store.dispatch(renameChannel(payload));
-    toast.success(i18next.t('notifications.success.channelRenamed'));
+    toast.success(i18n.t('notifications.success.channelRenamed'));
   });
 
   const russianWords = leoProfanity.getDictionary('ru');
