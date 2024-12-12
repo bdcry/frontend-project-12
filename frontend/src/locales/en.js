@@ -71,6 +71,17 @@ export default {
       usernameLength: 'From 3 to 20 characters',
       passwordLength: 'At least 6 characters',
       passwordMatch: 'Passwords must match',
-    },    
+    },
+    notifications: {
+      error: {
+        network: 'Something went wrong. Please check your connection.',
+        somethingWrong: 'Something went wrong. Please try again later.',
+      },
+      success: {
+        channelCreated: 'Channel created successfully!',
+        channelRemoved: 'Channel removed.',
+        channelRenamed: 'Channel renamed.',
+      },
+    },
   },
 };

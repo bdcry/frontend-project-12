@@ -72,6 +72,17 @@ export default {
       usernameLength: 'От 3 до 20 символов',
       passwordLength: 'Не менее 6 символов',
       passwordMatch: 'Пароли должны совпадать',
-    },    
+    },
+    notifications: {
+      success: {
+        channelCreated: 'Канал успешно создан!',
+        channelRemoved: 'Канал удалён!',
+        channelRenamed: 'Канал переименован!',
+      },
+      error: {
+        network: 'Ой, что-то пошло не так. Проверьте ваше подключение',
+        somethingWrong: 'Ой, что-то пошло не так. Попробуйте ещё раз позже.',
+      }
+    }
   }
 };

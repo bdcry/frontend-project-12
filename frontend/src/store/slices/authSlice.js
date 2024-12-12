@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { BASE_API_URL } from '../../utils/routes';
+import { BASE_API_URL, handleApiError } from '../../utils/routes';
 
 const getInitialState = () => {
   const localToken = localStorage.getItem('token');
@@ -54,6 +54,7 @@ const authSlice = createSlice({
       .addCase(signupUser.rejected, (state, action) => {
         state.loadingStatus = 'rejected';
         state.error = action.error;
+        handleApiError(action.error);
       })
   }
 });

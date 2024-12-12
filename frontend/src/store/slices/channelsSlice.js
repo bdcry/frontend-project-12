@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { BASE_API_URL } from '../../utils/routes';
+import { BASE_API_URL, handleApiError } from '../../utils/routes';
 import axios from 'axios';
 
 export const fetchChannelsByToken = createAsyncThunk(
@@ -87,6 +87,7 @@ const channelsSlice = createSlice({
       .addCase(fetchChannelsByToken.rejected, (state, action) => {
         state.loadingStatus = 'rejected';
         state.error = action.error;
+        handleApiError(action.error);
       })
       // Добавление каналов
       .addCase(createChannelsByToken.pending, (state) => {
@@ -101,6 +102,7 @@ const channelsSlice = createSlice({
       .addCase(createChannelsByToken.rejected, (state, action) => {
         state.loadingStatus = 'rejected';
         state.error = action.error;
+        handleApiError(action.error);
       })
       // Удаление канала
       .addCase(removeChannelById.pending, (state) => {
@@ -118,6 +120,7 @@ const channelsSlice = createSlice({
       .addCase(removeChannelById.rejected, (state, action) => {
         state.loadingStatus = 'rejected';
         state.error = action.error;
+        handleApiError(action.error);
       })
       // Редактирование имени канала
       .addCase(renameChannelById.pending, (state) => {
@@ -133,6 +136,7 @@ const channelsSlice = createSlice({
       .addCase(renameChannelById.rejected, (state, action) => {
         state.loadingStatus = 'rejected';
         state.error = action.error.message;
+        handleApiError(action.error);
       });
   },
 });

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../../store/slices/authSlice';
 import avatar from '../../assets/avatar-DIE1AEpS.jpg';
-import { BASE_API_URL } from '../../utils/routes';
+import { BASE_API_URL, handleApiError } from '../../utils/routes';
 import { useTranslation } from 'react-i18next';
 
 const handleSubmit = async (values, navigate, setStatus, dispatch, t) => {
@@ -20,7 +20,11 @@ const handleSubmit = async (values, navigate, setStatus, dispatch, t) => {
     setStatus();
     navigate('/');
   } catch (error) {
-    setStatus(t('login.errors.wrongLogin'));
+    if (error.code == 'ERR_NETWORK') {
+      handleApiError(error, t);
+    } else {
+      setStatus(t('login.errors.wrongLogin'));
+    }
   }
 }
 
