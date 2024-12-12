@@ -9,6 +9,7 @@ import { addMessage, removeMessageByChannelId } from './store/slices/messagesSli
 import { addChannel, removeChannel, renameChannel } from './store/slices/channelsSlice.js';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+import leoProfanity from 'leo-profanity';
 
 export const i18n = i18next.createInstance();
 
@@ -35,6 +36,14 @@ const init = async () => {
     toast.success(i18next.t('notifications.success.channelRenamed'));
   });
 
+  const russianWords = leoProfanity.getDictionary('ru');
+  const englishWords = leoProfanity.getDictionary('en');
+
+  const combinedWords = [...russianWords, ...englishWords];
+
+  leoProfanity.addDictionary('multiLang', combinedWords);
+  leoProfanity.loadDictionary('multiLang');
+
   const state = store.getState();
   const currentLanguage = state.language.currentLanguage;
 
@@ -47,7 +56,7 @@ const init = async () => {
   return (
     <Provider store={store}>
       <I18nextProvider i18n={i18n}>
-        <App />
+        <App profanityFilter={leoProfanity} />
         <ToastContainer />
       </I18nextProvider>
     </Provider>

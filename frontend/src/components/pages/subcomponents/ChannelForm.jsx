@@ -5,6 +5,7 @@ import { useFormik } from 'formik';
 import { channelSchema } from '../../../utils/validation/validationForm';
 import { createChannelsByToken } from '../../../store/slices/channelsSlice';
 import { useTranslation } from 'react-i18next';
+import leoProfanity from 'leo-profanity';
 
 const ChannelForm = () => {
   const dispatch = useDispatch();
@@ -17,8 +18,9 @@ const ChannelForm = () => {
     },
     validationSchema: channelSchema(channels, t),
     onSubmit: (values, { resetForm }) => {
+      const cleanChannelName = leoProfanity.clean(values.name);
       const newChannel = {
-        name: values.name,
+        name: cleanChannelName,
       };
       dispatch(createChannelsByToken({ token, newChannel }));
       dispatch(setStatusChannelModal({ modalName: 'addChannelModal', status: false }));
