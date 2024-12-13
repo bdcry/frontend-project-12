@@ -4,7 +4,9 @@
   "description": "[![Actions Status](https://github.com/bdcry/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/bdcry/frontend-project-12/actions)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "cd frontend && npm ci",
+    "build": "cd frontend && npm run build",
+    "start": "npx start-server -s ./frontend/dist" 
   },
   "repository": {
     "type": "git",
