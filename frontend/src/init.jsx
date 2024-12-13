@@ -8,13 +8,20 @@ import { io } from 'socket.io-client';
 import { addMessage, removeMessageByChannelId } from './store/slices/messagesSlice.js';
 import { addChannel, removeChannel, renameChannel } from './store/slices/channelsSlice.js';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'
+import 'react-toastify/dist/ReactToastify.css';
 import leoProfanity from 'leo-profanity';
+import { ErrorBoundary } from "@rollbar/react";
 
 export const i18n = i18next.createInstance();
 
 const init = async () => {
   const socket = io();
+
+  const rollbarConfig = {
+    accessToken: import.meta.env.VITE_ROLLBAR_ACCESS_TOKEN,
+    environment: import.meta.env.MODE,
+  };
+
 
   socket.on('newMessage', (payload) => {
     store.dispatch(addMessage(payload));
@@ -54,12 +61,14 @@ const init = async () => {
   });
 
   return (
-    <Provider store={store}>
-      <I18nextProvider i18n={i18n}>
-        <App profanityFilter={leoProfanity} />
-        <ToastContainer />
-      </I18nextProvider>
-    </Provider>
+    <ErrorBoundary config={rollbarConfig}>
+      <Provider store={store}>
+        <I18nextProvider i18n={i18n}>
+          <App />
+          <ToastContainer />
+        </I18nextProvider>
+      </Provider>
+    </ErrorBoundary>
   );
 };
 
