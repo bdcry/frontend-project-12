@@ -9,7 +9,7 @@ build:
 	cd frontend && npm run build
 
 start-frontend:
-	cd frontend && npm run dev
+	cd frontend && npm run preview
 
 start-backend: 
 	npx start-server -s ./frontend/dist
