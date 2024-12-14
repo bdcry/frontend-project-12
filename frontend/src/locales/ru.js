@@ -7,7 +7,7 @@ export default {
       span: 'Нет аккаунта?',
       registration: 'Регистрация',
       errors: {
-        wrongLogin: 'Неверное имя пользователя или пароль',
+        wrongLogin: 'Неверные имя пользователя или пароль',
       },
     },
     registration: {
