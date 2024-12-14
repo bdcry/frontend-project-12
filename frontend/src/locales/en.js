@@ -54,6 +54,7 @@ export default {
       placeholder: 'Enter a new channel name',
       cancel: 'Cancel',
       submit: 'Submit',
+      hidden_title: 'Channel name',
     },
     header: {
       title: 'Hexlet Chat',
