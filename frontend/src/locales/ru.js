@@ -75,9 +75,9 @@ export default {
     },
     notifications: {
       success: {
-        channelCreated: 'Канал успешно создан!',
-        channelRemoved: 'Канал удалён!',
-        channelRenamed: 'Канал переименован!',
+        channelCreated: 'Канал создан',
+        channelRemoved: 'Канал удалён',
+        channelRenamed: 'Канал переименован',
       },
       error: {
         network: 'Ой, что-то пошло не так. Проверьте ваше подключение',
