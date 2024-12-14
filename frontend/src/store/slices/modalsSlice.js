@@ -13,8 +13,14 @@ const modalsSlice = createSlice({
   reducers: {
     setStatusChannelModal: (state, { payload }) => {
       const { modalName, status, channelId } = payload;
-      state.modals[modalName] = status;
-      state.modals.activeChannelId = channelId;
+      return {
+        ...state,
+        modals: {
+          ...state.modals,
+          [modalName]: status,
+          activeChannelId: channelId,
+        },
+      };
     },
   },
 });

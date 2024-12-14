@@ -1,8 +1,8 @@
 import { Button, Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { setStatusChannelModal } from '../../store/slices/modalsSlice';
 import { removeChannelById } from '../../store/slices/channelsSlice';
-import { useTranslation } from 'react-i18next';
 
 const RemoveChannelModal = () => {
   const dispatch = useDispatch();
@@ -17,21 +17,14 @@ const RemoveChannelModal = () => {
       setStatusChannelModal({
         modalName: 'removeChannelModal',
         status: false,
-      })
+      }),
     );
   };
 
   return (
     <Modal
       show={modalStatus}
-      onHide={() =>
-        dispatch(
-          setStatusChannelModal({
-            modalName: 'removeChannelModal',
-            status: false,
-          })
-        )
-      }
+      onHide={() => dispatch(setStatusChannelModal({ modalName: 'removeChannelModal', status: false }))}
       dialogClassName="modal-dialog-centered"
     >
       <Modal.Header>
@@ -40,15 +33,8 @@ const RemoveChannelModal = () => {
           aria-label="Close"
           data-bs-dismiss="modal"
           variant="close"
-          onClick={() =>
-            dispatch(
-              setStatusChannelModal({
-                modalName: 'removeChannelModal',
-                status: false,
-              })
-            )
-          }
-        ></Button>
+          onClick={() => dispatch(setStatusChannelModal({ modalName: 'removeChannelModal', status: false }))}
+        />
       </Modal.Header>
       <Modal.Body>
         <p className="lead">{t('removeChannelModal.body')}</p>
@@ -56,18 +42,15 @@ const RemoveChannelModal = () => {
           <Button
             variant="secondary"
             className="me-2"
-            onClick={() =>
-              dispatch(
-                setStatusChannelModal({
-                  modalName: 'removeChannelModal',
-                  status: false,
-                })
-              )
-            }
+            onClick={() => dispatch(setStatusChannelModal({ modalName: 'removeChannelModal', status: false }))}
           >
             {t('removeChannelModal.cancel')}
           </Button>
-          <Button type="submit" variant="danger" onClick={handleRemove}>
+          <Button
+            type="submit"
+            variant="danger"
+            onClick={handleRemove}
+          >
             {t('removeChannelModal.remove')}
           </Button>
         </div>

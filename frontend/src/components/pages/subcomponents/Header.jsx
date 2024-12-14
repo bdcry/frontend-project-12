@@ -1,7 +1,7 @@
 import { Button } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../../store/slices/authSlice';
-import { useTranslation } from 'react-i18next';
 import { changeLanguage } from '../../../store/slices/languageSlice';
 
 const Header = () => {
@@ -18,6 +18,7 @@ const Header = () => {
         </Button>
       );
     }
+    return null;
   };
 
   const renderChatLink = () => {
@@ -28,6 +29,7 @@ const Header = () => {
         </a>
       );
     }
+    return null;
   };
 
   const renderLanguageButtons = () => {
@@ -35,12 +37,12 @@ const Header = () => {
       { label: 'Русский', code: 'ru' },
       { label: 'English', code: 'en' },
     ];
-  
+
     const handleChangeLanguage = (lang) => {
       i18n.changeLanguage(lang);
       dispatch(changeLanguage(lang));
     };
-  
+
     return (
       <div className="language-buttons me-2">
         {languages.map(({ label, code }) => (

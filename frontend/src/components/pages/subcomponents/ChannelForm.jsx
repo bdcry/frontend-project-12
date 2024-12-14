@@ -1,32 +1,32 @@
+import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
+import leoProfanity from 'leo-profanity';
 import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { setStatusChannelModal } from '../../../store/slices/modalsSlice';
-import { useFormik } from 'formik';
 import { channelSchema } from '../../../utils/validation/validationForm';
 import { createChannelsByToken } from '../../../store/slices/channelsSlice';
-import { useTranslation } from 'react-i18next';
-import leoProfanity from 'leo-profanity';
 
 const ChannelForm = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const token = useSelector(({ auth }) => auth.token);
-  const channels = useSelector(({ channels }) => channels.channelsData);
+  const channelsData = useSelector(({ channels }) => channels.channelsData);
+
   const formik = useFormik({
     initialValues: {
       name: '',
     },
-    validationSchema: channelSchema(channels, t),
+    validationSchema: channelSchema(channelsData, t),
     onSubmit: (values, { resetForm }) => {
       const cleanChannelName = leoProfanity.clean(values.name);
-      const newChannel = {
-        name: cleanChannelName,
-      };
+      const newChannel = { name: cleanChannelName };
       dispatch(createChannelsByToken({ token, newChannel }));
       dispatch(setStatusChannelModal({ modalName: 'addChannelModal', status: false }));
       resetForm();
     },
   });
+
   return (
     <Form onSubmit={formik.handleSubmit}>
       <Form.Group>
