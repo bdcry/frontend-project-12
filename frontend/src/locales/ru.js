@@ -51,7 +51,7 @@ export default {
       remove: 'Удалить',
     },
     renameChannelModal: {
-      title: 'Переименовать',
+      title: 'Переименовать канал',
       placeholder: 'Введите новое имя канала',
       cancel: 'Отменить',
       submit: 'Отправить',

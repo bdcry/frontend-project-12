@@ -50,7 +50,7 @@ export default {
       remove: 'Delete',
     },
     renameChannelModal: {
-      title: 'Rename',
+      title: 'Rename сhannel name',
       placeholder: 'Enter a new channel name',
       cancel: 'Cancel',
       submit: 'Submit',
