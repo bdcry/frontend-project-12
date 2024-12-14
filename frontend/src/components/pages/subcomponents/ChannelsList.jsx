@@ -39,8 +39,10 @@ const ChannelsList = ({ data }) => {
       </Button>
       <Dropdown.Toggle
         variant={channel.id === activeChannelId ? 'secondary' : ''}
-        className="flex-grow-0 dropdown-toggle-split rounded-0"
-      ></Dropdown.Toggle>
+        className="flex-grow-0 dropdown-toggle-split"
+      >
+        <span className="visually-hidden">{t('chat.hidden_button')}</span>
+      </Dropdown.Toggle>
       <Dropdown.Menu>
         <Dropdown.Item
           onClick={() =>
