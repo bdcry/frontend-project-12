@@ -4,7 +4,7 @@
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/820eafbd78c07b028bb4/maintainability)](https://codeclimate.com/github/bdcry/frontend-project-12/maintainability) - Оценка Maintainability от Codeclimate.
 
-[Чат Slack на Render](https://frontend-project-12-u71e.onrender.com) - **Посетите развернутую версию проекта на Render**
+[Чат Slack на Render](https://frontend-project-12-u71e.onrender.com) - Посетите развернутую версию проекта на Render
 
 ## Описание проекта
 
