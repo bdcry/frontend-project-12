@@ -11,11 +11,11 @@ import resources from './locales/index.js';
 import App from './components/App';
 import { addMessage, removeMessageByChannelId } from './store/slices/messagesSlice.js';
 import { addChannel, removeChannel, renameChannel } from './store/slices/channelsSlice.js';
-
-export const i18n = i18next.createInstance();
+import { setTranslator } from './utils/translator.js';
 
 const init = async () => {
   const socket = io();
+  const i18n = i18next.createInstance();
 
   const rollbarConfig = {
     accessToken: import.meta.env.VITE_ROLLBAR_ACCESS_TOKEN,
@@ -49,13 +49,15 @@ const init = async () => {
   leoProfanity.loadDictionary('multiLang');
 
   const state = store.getState();
-  const currentLanguage = state.language.currentLanguage;
+  const { currentLanguage } = state.language;
 
   await i18n.use(initReactI18next).init({
     resources,
     fallbackLng: 'ru',
     lng: currentLanguage,
   });
+
+  setTranslator(i18n.t);
 
   return (
     <ErrorBoundary config={rollbarConfig}>

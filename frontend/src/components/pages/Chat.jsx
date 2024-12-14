@@ -30,21 +30,20 @@ const Chat = () => {
     dispatch(fetchMessagesByToken(token));
   }, [dispatch, token]);
 
-  const renderMessages = () =>
-    filteredMessage.map((message) => (
-      <div
-        id="messages-box"
-        className="chat-messages overflow-auto px-5"
-        key={message.id}
-      >
-        <span className={message.username === username ? 'fw-bold' : 'fw-normal'}>
-          {message.username}
-          :
-          {' '}
-        </span>
-        {message.body}
-      </div>
-    ));
+  const renderMessages = () => filteredMessage.map((message) => (
+    <div
+      id="messages-box"
+      className="chat-messages overflow-auto px-5"
+      key={message.id}
+    >
+      <span className={message.username === username ? 'fw-bold' : 'fw-normal'}>
+        {message.username}
+        :
+        {' '}
+      </span>
+      {message.body}
+    </div>
+  ));
 
   return (
     <Container className="h-100 my-4 overflow-hidden rounded shadow">

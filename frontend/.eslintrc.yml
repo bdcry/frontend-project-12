@@ -11,11 +11,11 @@ parserOptions:
   ecmaFeatures:
     jsx: true
   ecmaVersion: latest
+  requireConfigFile: false
   sourceType: module
 
 plugins:
   - react
-  - functional
 
 rules:
   import/extensions: 0

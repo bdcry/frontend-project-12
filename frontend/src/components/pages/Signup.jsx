@@ -9,9 +9,9 @@ import {
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import { signupSchema } from '../../utils/validation/validationForm';
 import { signupUser } from '../../store/slices/authSlice';
-import { useTranslation } from 'react-i18next';
 import avatar from '../../assets/avatar_1-D7Cot-zE.jpg';
 
 const SignupForm = () => {

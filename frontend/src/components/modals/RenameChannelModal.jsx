@@ -1,11 +1,11 @@
 import { Button, Modal, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { useFormik } from 'formik';
+import leoProfanity from 'leo-profanity';
+import { useTranslation } from 'react-i18next';
 import { setStatusChannelModal } from '../../store/slices/modalsSlice';
 import { renameChannelById } from '../../store/slices/channelsSlice';
-import { useFormik } from 'formik';
 import { channelSchema } from '../../utils/validation/validationForm';
-import { useTranslation } from 'react-i18next';
-import leoProfanity from 'leo-profanity';
 
 const RenameChannelModal = () => {
   const dispatch = useDispatch();
@@ -39,15 +39,13 @@ const RenameChannelModal = () => {
   return (
     <Modal
       show={modalStatus}
-      onHide={() =>
-        dispatch(
-          setStatusChannelModal({
-            modalName: 'renameChannelModal',
-            status: false,
-            channelId: null,
-          }),
-        )
-      }
+      onHide={() => dispatch(
+        setStatusChannelModal({
+          modalName: 'renameChannelModal',
+          status: false,
+          channelId: null,
+        }),
+      )}
       dialogClassName="modal-dialog-centered"
     >
       <Modal.Header>
@@ -56,15 +54,13 @@ const RenameChannelModal = () => {
           aria-label="Close"
           data-bs-dismiss="modal"
           variant="close"
-          onClick={() =>
-            dispatch(
-              setStatusChannelModal({
-                modalName: 'renameChannelModal',
-                status: false,
-                channelId: null,
-              })
-            )
-          }
+          onClick={() => dispatch(
+            setStatusChannelModal({
+              modalName: 'renameChannelModal',
+              status: false,
+              channelId: null,
+            }),
+          )}
         />
       </Modal.Header>
       <Modal.Body>
@@ -87,14 +83,13 @@ const RenameChannelModal = () => {
               <Button
                 variant="secondary"
                 className="me-2"
-                onClick={() =>
-                  dispatch(
-                    setStatusChannelModal({
-                      modalName: 'renameChannelModal',
-                      status: false,
-                      channelId: null,
-                    }),
-                  )}
+                onClick={() => dispatch(
+                  setStatusChannelModal({
+                    modalName: 'renameChannelModal',
+                    status: false,
+                    channelId: null,
+                  }),
+                )}
               >
                 {t('renameChannelModal.cancel')}
               </Button>
