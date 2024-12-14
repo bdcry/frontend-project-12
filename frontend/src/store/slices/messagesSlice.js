@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { BASE_API_URL, handleApiError } from '../../utils/routes';
@@ -9,7 +11,7 @@ export const fetchMessagesByToken = createAsyncThunk(
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
-  }
+  },
 );
 
 export const sendMessagesByToken = createAsyncThunk(
@@ -19,7 +21,7 @@ export const sendMessagesByToken = createAsyncThunk(
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
-  }
+  },
 );
 
 const messagesSlice = createSlice({
@@ -29,7 +31,7 @@ const messagesSlice = createSlice({
     addMessage: (state, action) => {
       state.messagesData.push(action.payload);
     },
-    removeMessageByChannelId: ( state, { payload }) => {
+    removeMessageByChannelId: (state, { payload }) => {
       state.messagesData = state.messagesData.filter((message) => message.channelId !== payload.id);
     },
   },
@@ -51,19 +53,19 @@ const messagesSlice = createSlice({
         handleApiError(action.error);
       })
     // Отправка сообщений
-    .addCase(sendMessagesByToken.pending, (state) => {
-      state.loadingStatus = 'loading';
-      state.error = null;
-    })
-    .addCase(sendMessagesByToken.fulfilled, (state) => {
-      state.loadingStatus = 'idle';
-      state.error = null;
-    })
-    .addCase(sendMessagesByToken.rejected, (state, action) => {
-      state.loadingStatus = 'rejected';
-      state.error = action.error;
-      handleApiError(action.error);
-    })
+      .addCase(sendMessagesByToken.pending, (state) => {
+        state.loadingStatus = 'loading';
+        state.error = null;
+      })
+      .addCase(sendMessagesByToken.fulfilled, (state) => {
+        state.loadingStatus = 'idle';
+        state.error = null;
+      })
+      .addCase(sendMessagesByToken.rejected, (state, action) => {
+        state.loadingStatus = 'rejected';
+        state.error = action.error;
+        handleApiError(action.error);
+      });
   },
 });
 

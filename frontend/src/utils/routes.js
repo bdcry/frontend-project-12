@@ -1,5 +1,5 @@
-import { toast } from "react-toastify";
-import { i18n } from "../init";
+import { toast } from 'react-toastify';
+import { i18n } from '../init';
 
 export const BASE_API_URL = '/api/v1';
 

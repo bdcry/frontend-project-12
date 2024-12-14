@@ -1,4 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+/* eslint-disable consistent-return */
+/* eslint-disable no-param-reassign */
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   currentLanguage: 'ru',

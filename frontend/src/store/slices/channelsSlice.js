@@ -1,6 +1,8 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { BASE_API_URL, handleApiError } from '../../utils/routes';
 import axios from 'axios';
+import { BASE_API_URL, handleApiError } from '../../utils/routes';
 
 export const fetchChannelsByToken = createAsyncThunk(
   'channels/fetchChannelsByToken',
@@ -9,7 +11,7 @@ export const fetchChannelsByToken = createAsyncThunk(
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
-  }
+  },
 );
 
 export const createChannelsByToken = createAsyncThunk(
@@ -19,7 +21,7 @@ export const createChannelsByToken = createAsyncThunk(
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
-  }
+  },
 );
 
 export const removeChannelById = createAsyncThunk(
@@ -29,7 +31,7 @@ export const removeChannelById = createAsyncThunk(
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
-  }
+  },
 );
 
 export const renameChannelById = createAsyncThunk(
@@ -40,10 +42,10 @@ export const renameChannelById = createAsyncThunk(
       editedChannel,
       {
         headers: { Authorization: `Bearer ${token}` },
-      }
+      },
     );
     return response.data;
-  }
+  },
 );
 
 const channelsSlice = createSlice({
@@ -129,7 +131,7 @@ const channelsSlice = createSlice({
       })
       .addCase(renameChannelById.fulfilled, (state, { payload }) => {
         const index = state.channelsData.findIndex((channel) => channel.id === payload.id);
-          state.channelsData[index] = payload;
+        state.channelsData[index] = payload;
         state.loadingStatus = 'idle';
         state.error = null;
       })
@@ -142,4 +144,6 @@ const channelsSlice = createSlice({
 });
 
 export default channelsSlice.reducer;
-export const { selectActiveTab, addChannel, removeChannel, renameChannel } = channelsSlice.actions;
+export const {
+  selectActiveTab, addChannel, removeChannel, renameChannel,
+} = channelsSlice.actions;
