@@ -14,7 +14,7 @@ export default {
       title: 'Регистрация',
       placeholder_username: 'Имя пользователя',
       placeholder_password: 'Пароль',
-      placeholder_confrimpassword: 'Повторите пароль',
+      placeholder_confrimpassword: 'Подтвердите пароль',
       button: 'Зарегистрироваться',
       errors: {
         alredyRegistred: 'Такой пользователь уже существует',
