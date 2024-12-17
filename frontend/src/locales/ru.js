@@ -28,7 +28,7 @@ export default {
       hidden_button: 'Управление каналом',
     },
     addChannelModal: {
-      title: 'Добавить каналы',
+      title: 'Добавить канал',
     },
     channelForm: {
       label: 'Имя канала',
@@ -59,7 +59,6 @@ export default {
     },
     header: {
       title: 'Hexlet Chat',
-      chat: 'Чаты',
       logout: 'Выйти',
     },
     page404: {

@@ -19,7 +19,7 @@ const ChannelForm = () => {
     },
     validationSchema: channelSchema(channelsData, t),
     onSubmit: (values, { resetForm }) => {
-      const cleanChannelName = leoProfanity.clean(values.name);
+      const cleanChannelName = leoProfanity.clean(values.name.trim());
       const newChannel = { name: cleanChannelName };
       dispatch(createChannelsByToken({ token, newChannel }));
       dispatch(setStatusChannelModal({ modalName: 'addChannelModal', status: false }));
@@ -38,6 +38,7 @@ const ChannelForm = () => {
           value={formik.values.name}
           isInvalid={formik.errors.name && formik.touched.name}
           placeholder={t('channelForm.label')}
+          autoFocus
         />
         <label className="visually-hidden" htmlFor="name">
           {t('channelForm.label')}

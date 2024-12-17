@@ -58,7 +58,6 @@ export default {
     },
     header: {
       title: 'Hexlet Chat',
-      chat: 'Chats',
       logout: 'Log Out',
     },
     page404: {

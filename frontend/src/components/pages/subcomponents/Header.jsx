@@ -21,17 +21,6 @@ const Header = () => {
     return null;
   };
 
-  const renderChatLink = () => {
-    if (isLoggedIn) {
-      return (
-        <a href="/" className="navbar-brand">
-          {t('header.chat')}
-        </a>
-      );
-    }
-    return null;
-  };
-
   const renderLanguageButtons = () => {
     const languages = [
       { label: 'Русский', code: 'ru' },
@@ -63,10 +52,9 @@ const Header = () => {
     <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
       <div className="container d-flex justify-content-between align-items-center">
         <div className="d-flex align-items-center">
-          <a href="/login" className="navbar-brand">
+          <a href="/" className="navbar-brand">
             {t('header.title')}
           </a>
-          {renderChatLink()}
         </div>
         <div className="d-flex align-items-center">
           {renderLanguageButtons()}

@@ -1,5 +1,6 @@
 import { Button, Modal, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
 import leoProfanity from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
@@ -16,13 +17,19 @@ const RenameChannelModal = () => {
   const channelsData = useSelector(({ channels }) => channels.channelsData);
   const currentChannel = channelsData.find((channel) => channel.id === activeChannelId);
 
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
   const formik = useFormik({
     initialValues: {
-      name: currentChannel.name,
+      name: currentChannel.name.trim(),
     },
     validationSchema: channelSchema(channelsData, t, currentChannel.name),
     onSubmit: (values, { resetForm }) => {
-      const cleanChannelName = leoProfanity.clean(values.name);
+      const cleanChannelName = leoProfanity.clean(values.name.trim());
       const editedChannel = { name: cleanChannelName };
       dispatch(renameChannelById({ token, id: currentChannel.id, editedChannel }));
       dispatch(
@@ -67,6 +74,8 @@ const RenameChannelModal = () => {
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group>
             <Form.Control
+              ref={inputRef}
+              onFocus={() => inputRef.current.select()}
               name="name"
               id="name"
               className="mb-2"

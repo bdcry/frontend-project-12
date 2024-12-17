@@ -8,6 +8,7 @@ export const channelSchema = (channels, t, currentChannelName = '') => {
   return yup.object().shape({
     name: yup
       .string()
+      .trim()
       .required(t('validation.required'))
       .min(3, t('validation.channelNameLength'))
       .max(20, t('validation.channelNameLength'))
@@ -30,5 +31,3 @@ export const signupSchema = (t) => yup.object().shape({
     .required(t('validation.required'))
     .oneOf([yup.ref('password')], t('validation.passwordMatch')),
 });
-
-// TODO: создать валидацию для формы логина
