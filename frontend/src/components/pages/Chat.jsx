@@ -31,16 +31,10 @@ const Chat = () => {
   }, [dispatch, token]);
 
   const renderMessages = () => filteredMessage.map((message) => (
-    <div
-      id="messages-box"
-      className="chat-messages overflow-auto px-5"
-      key={message.id}
-    >
-      <span className={message.username === username ? 'fw-bold' : 'fw-normal'}>
-        {message.username}
-        :
-        {' '}
-      </span>
+    <div className="text-break mb-2" key={message.id}>
+      <b className={message.username === username ? 'fw-bold' : 'fw-normal'}>{message.username}</b>
+      :
+      {' '}
       {message.body}
     </div>
   ));
@@ -74,7 +68,13 @@ const Chat = () => {
                 {t('chat.messages_count', { count: filteredMessage.length })}
               </span>
             </div>
-            {renderMessages()}
+            {/* {renderMessages()} */}
+            <div
+              id="messages-box"
+              className="chat-messages overflow-auto px-5"
+            >
+              {renderMessages()}
+            </div>
             <div className="mt-auto px-5 py-3">
               <MessageForm />
             </div>
