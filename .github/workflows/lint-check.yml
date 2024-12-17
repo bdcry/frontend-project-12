@@ -1,0 +1,35 @@
+name: 🎨 Lint Check
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Install dependencies
+        run: |
+          cd frontend
+          make install
+
+      - name: 🔍 Run ESLint
+        run: |
+          cd frontend
+          make lint
+
+      - name: ✅ Linting completed successfully
+        if: success()
+        run: echo "🎉 ESLint found no issues!"
+
+      - name: 🚨 Linting issues found
+        if: failure()
+        run: echo "⚠️ Oops! ESLint found some issues. Please fix them."
