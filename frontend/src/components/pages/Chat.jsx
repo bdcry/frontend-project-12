@@ -68,7 +68,6 @@ const Chat = () => {
                 {t('chat.messages_count', { count: filteredMessage.length })}
               </span>
             </div>
-            {/* {renderMessages()} */}
             <div
               id="messages-box"
               className="chat-messages overflow-auto px-5"
