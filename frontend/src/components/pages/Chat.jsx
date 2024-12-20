@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import {
@@ -16,6 +16,7 @@ import ChannelsList from './subcomponents/ChannelsList';
 const Chat = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const messageRef = useRef(null);
   const token = useSelector(({ auth }) => auth.token);
   const username = useSelector(({ auth }) => auth.username);
   const channelsData = useSelector(({ channels }) => channels.channelsData);
@@ -24,14 +25,32 @@ const Chat = () => {
 
   const ActiveChannelForTitle = channelsData.find((c) => c.id === activeChannelId) || {};
   const filteredMessage = messagesData.filter((m) => m.channelId === activeChannelId);
+  console.log(filteredMessage);
 
   useEffect(() => {
     dispatch(fetchChannelsByToken(token));
     dispatch(fetchMessagesByToken(token));
   }, [dispatch, token]);
 
+  // useEffect(() => {
+  //   if (messagesData.length > 0) {
+  //     if (activeChannelId) {
+  //       messageRef.current?.scrollIntoView({ behavior: 'smooth' });
+  //     }
+  //   }
+  // });
+
+  // useEffect(() => {
+  //   if (messagesData.length > 0) {
+  //     const lastMessage = messagesData[messagesData.length - 1];
+  //     if (lastMessage.channelId === activeChannelId) {
+  //       messageRef.current?.scrollIntoView({ behavior: 'smooth' });
+  //     }
+  //   }
+  // }, [messagesData, activeChannelId]);
+
   const renderMessages = () => filteredMessage.map((message) => (
-    <div className="text-break mb-2" key={message.id}>
+    <div className="text-break mb-2" key={message.id} ref={messageRef}>
       <b className={message.username === username ? 'fw-bold' : 'fw-normal'}>{message.username}</b>
       :
       {' '}

@@ -2,12 +2,12 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { BASE_API_URL, handleApiError } from '../../utils/routes';
+import { apiPath, handleApiError } from '../../utils/routes';
 
 export const fetchChannelsByToken = createAsyncThunk(
   'channels/fetchChannelsByToken',
   async (token) => {
-    const response = await axios.get(`${BASE_API_URL}/channels`, {
+    const response = await axios.get(apiPath.channelsPath(), {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
@@ -17,7 +17,7 @@ export const fetchChannelsByToken = createAsyncThunk(
 export const createChannelsByToken = createAsyncThunk(
   'channels/createChannelsByToken',
   async ({ token, newChannel }) => {
-    const response = await axios.post(`${BASE_API_URL}/channels`, newChannel, {
+    const response = await axios.post(apiPath.channelsPath(), newChannel, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
@@ -27,7 +27,7 @@ export const createChannelsByToken = createAsyncThunk(
 export const removeChannelById = createAsyncThunk(
   'channels/removeChannelById',
   async ({ token, id }) => {
-    const response = await axios.delete(`${BASE_API_URL}/channels/${id}`, {
+    const response = await axios.delete(apiPath.channelPath(id), {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
@@ -38,7 +38,7 @@ export const renameChannelById = createAsyncThunk(
   'channels/renameChannelById',
   async ({ token, id, editedChannel }) => {
     const response = await axios.patch(
-      `${BASE_API_URL}/channels/${id}`,
+      apiPath.channelPath(id),
       editedChannel,
       {
         headers: { Authorization: `Bearer ${token}` },

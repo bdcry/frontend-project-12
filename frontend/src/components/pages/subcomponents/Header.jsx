@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../../store/slices/authSlice';
 import { changeLanguage } from '../../../store/slices/languageSlice';
+import { linkRoutes } from '../../../utils/routes';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -52,7 +53,7 @@ const Header = () => {
     <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
       <div className="container d-flex justify-content-between align-items-center">
         <div className="d-flex align-items-center">
-          <a href="/" className="navbar-brand">
+          <a href={linkRoutes.main} className="navbar-brand">
             {t('header.title')}
           </a>
         </div>

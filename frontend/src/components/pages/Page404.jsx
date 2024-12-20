@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import NotFound from '../../assets/404-D_FLHmTM.svg';
+import { linkRoutes } from '../../utils/routes';
 
 const Page404 = () => {
   const { t } = useTranslation();
@@ -17,7 +18,7 @@ const Page404 = () => {
         <p className="text-muted">
           {t('page404.description')}
           {' '}
-          <Link to="/">
+          <Link to={linkRoutes.main}>
             {t('page404.link')}
           </Link>
         </p>

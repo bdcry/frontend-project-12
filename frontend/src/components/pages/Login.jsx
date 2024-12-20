@@ -1,10 +1,5 @@
 import {
-  Container,
-  Row,
-  Col,
-  Card,
-  Form,
-  Button,
+  Container, Row, Col, Card, Form, Button,
 } from 'react-bootstrap';
 import axios from 'axios';
 import { useFormik } from 'formik';
@@ -13,15 +8,18 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { loginSuccess } from '../../store/slices/authSlice';
 import avatar from '../../assets/avatar-DIE1AEpS.jpg';
-import { BASE_API_URL, handleApiError } from '../../utils/routes';
+import { apiPath, handleApiError, linkRoutes } from '../../utils/routes';
 
 const handleSubmit = async (values, navigate, setStatus, dispatch, t) => {
   try {
-    const { data } = await axios.post(`${BASE_API_URL}/login`, { username: values.username, password: values.password });
+    const { data } = await axios.post(apiPath.loginPath(), {
+      username: values.username,
+      password: values.password,
+    });
     const { token, username } = data;
     dispatch(loginSuccess({ token, username }));
     setStatus();
-    navigate('/');
+    navigate(linkRoutes.main);
   } catch (error) {
     if (error.code === 'ERR_NETWORK') {
       handleApiError(error, t);
@@ -47,9 +45,16 @@ const Login = () => {
           <Card className="card shadow-sm">
             <Card.Body className="card-body row p-5">
               <Col className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-                <img src={avatar} alt={t('login.title')} className="rounded-circle" />
+                <img
+                  src={avatar}
+                  alt={t('login.title')}
+                  className="rounded-circle"
+                />
               </Col>
-              <Form className="col-12 col-md-6 mt-3 mt-md-0" onSubmit={formik.handleSubmit}>
+              <Form
+                className="col-12 col-md-6 mt-3 mt-md-0"
+                onSubmit={formik.handleSubmit}
+              >
                 <h1 className="text-center mb-4">{t('login.title')}</h1>
                 <Form.Group className="form-floating mb-3" controlId="username">
                   <Form.Control
@@ -79,7 +84,11 @@ const Login = () => {
                   />
                   <Form.Label>{t('login.placeholder_password')}</Form.Label>
                   {formik.status && (
-                    <Form.Control.Feedback type="invalid" className="d-block mb-3" tooltip>
+                    <Form.Control.Feedback
+                      type="invalid"
+                      className="d-block mb-3"
+                      tooltip
+                    >
                       {formik.status}
                     </Form.Control.Feedback>
                   )}
@@ -97,7 +106,7 @@ const Login = () => {
               <div className="text-center">
                 <span>{t('login.span')}</span>
                 {' '}
-                <a href="/signup">{t('login.registration')}</a>
+                <a href={linkRoutes.signup}>{t('login.registration')}</a>
               </div>
             </Card.Footer>
           </Card>

@@ -2,7 +2,7 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { BASE_API_URL, handleApiError } from '../../utils/routes';
+import { apiPath, handleApiError } from '../../utils/routes';
 
 const getInitialState = () => {
   const localToken = localStorage.getItem('token');
@@ -15,7 +15,8 @@ const getInitialState = () => {
 export const signupUser = createAsyncThunk(
   'auth/signupUser',
   async ({ username, password }) => {
-    const response = await axios.post(`${BASE_API_URL}/signup`, { username, password });
+    const response = await axios.post(apiPath.signupPath(), { username, password });
+    console.log(apiPath.loginPath());
     return response.data;
   },
 );
