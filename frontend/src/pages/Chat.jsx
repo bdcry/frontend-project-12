@@ -7,11 +7,11 @@ import {
   Row,
   Nav,
 } from 'react-bootstrap';
-import MessageForm from './subcomponents/MessageForm';
-import { fetchChannelsByToken } from '../../store/slices/channelsSlice';
-import { fetchMessagesByToken } from '../../store/slices/messagesSlice';
-import AddChannelModal from '../modals/AddChannelModal';
-import ChannelsList from './subcomponents/ChannelsList';
+import MessageForm from '../components/MessageForm';
+import { fetchChannelsByToken } from '../store/slices/channelsSlice';
+import { fetchMessagesByToken } from '../store/slices/messagesSlice';
+import AddChannelModal from '../components/modals/AddChannelModal';
+import ChannelsList from '../components/ChannelsList';
 
 const Chat = () => {
   const dispatch = useDispatch();

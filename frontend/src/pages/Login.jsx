@@ -6,9 +6,9 @@ import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { loginSuccess } from '../../store/slices/authSlice';
-import avatar from '../../assets/avatar-DIE1AEpS.jpg';
-import { apiPath, handleApiError, linkRoutes } from '../../utils/routes';
+import { loginSuccess } from '../store/slices/authSlice';
+import avatar from '../assets/avatar-DIE1AEpS.jpg';
+import { apiPath, handleApiError, linkRoutes } from '../utils/routes';
 
 const handleSubmit = async (values, navigate, setStatus, dispatch, t) => {
   try {

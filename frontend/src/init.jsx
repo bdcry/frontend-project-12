@@ -8,7 +8,7 @@ import leoProfanity from 'leo-profanity';
 import { ErrorBoundary } from '@rollbar/react';
 import store from './store/index.js';
 import resources from './locales/index.js';
-import App from './components/App';
+import App from './App';
 import { addMessage, removeMessageByChannelId } from './store/slices/messagesSlice.js';
 import { addChannel, removeChannel, renameChannel } from './store/slices/channelsSlice.js';
 import { setTranslator } from './utils/translator.js';

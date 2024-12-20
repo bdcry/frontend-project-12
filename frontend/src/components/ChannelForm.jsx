@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next';
 import leoProfanity from 'leo-profanity';
 import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { setStatusChannelModal } from '../../../store/slices/modalsSlice';
-import { channelSchema } from '../../../utils/validation/validationForm';
-import { createChannelsByToken } from '../../../store/slices/channelsSlice';
+import { setStatusChannelModal } from '../store/slices/modalsSlice';
+import { channelSchema } from '../utils/validation/validationForm';
+import { createChannelsByToken } from '../store/slices/channelsSlice';
 
 const ChannelForm = () => {
   const dispatch = useDispatch();

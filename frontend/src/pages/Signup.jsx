@@ -10,10 +10,10 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { signupSchema } from '../../utils/validation/validationForm';
-import { signupUser } from '../../store/slices/authSlice';
-import avatar from '../../assets/avatar_1-D7Cot-zE.jpg';
-import { linkRoutes } from '../../utils/routes';
+import { signupSchema } from '../utils/validation/validationForm';
+import { signupUser } from '../store/slices/authSlice';
+import avatar from '../assets/avatar_1-D7Cot-zE.jpg';
+import { linkRoutes } from '../utils/routes';
 
 const SignupForm = () => {
   const navigate = useNavigate();

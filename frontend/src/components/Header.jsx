@@ -1,9 +1,9 @@
 import { Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../../store/slices/authSlice';
-import { changeLanguage } from '../../../store/slices/languageSlice';
-import { linkRoutes } from '../../../utils/routes';
+import { logout } from '../store/slices/authSlice';
+import { changeLanguage } from '../store/slices/languageSlice';
+import { linkRoutes } from '../utils/routes';
 
 const Header = () => {
   const dispatch = useDispatch();

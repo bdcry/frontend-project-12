@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import leoProfanity from 'leo-profanity';
 import { useDispatch, useSelector } from 'react-redux';
-import { sendMessagesByToken } from '../../../store/slices/messagesSlice';
+import { sendMessagesByToken } from '../store/slices/messagesSlice';
 
 const MessageForm = () => {
   const dispatch = useDispatch();

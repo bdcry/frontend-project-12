@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import NotFound from '../../assets/404-D_FLHmTM.svg';
-import { linkRoutes } from '../../utils/routes';
+import NotFound from '../assets/404-D_FLHmTM.svg';
+import { linkRoutes } from '../utils/routes';
 
 const Page404 = () => {
   const { t } = useTranslation();

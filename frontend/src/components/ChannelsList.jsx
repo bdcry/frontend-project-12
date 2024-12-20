@@ -1,10 +1,10 @@
 import { Button, Nav, Dropdown } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { selectActiveTab } from '../../../store/slices/channelsSlice';
-import { setStatusChannelModal } from '../../../store/slices/modalsSlice';
-import RenameChannelModal from '../../modals/RenameChannelModal';
-import RemoveChannelModal from '../../modals/RemoveChannelModal';
+import { selectActiveTab } from '../store/slices/channelsSlice';
+import { setStatusChannelModal } from '../store/slices/modalsSlice';
+import RenameChannelModal from './modals/RenameChannelModal';
+import RemoveChannelModal from './modals/RemoveChannelModal';
 
 const ChannelsList = ({ data = { channels: [], activeChannelId: null } }) => {
   const dispatch = useDispatch();

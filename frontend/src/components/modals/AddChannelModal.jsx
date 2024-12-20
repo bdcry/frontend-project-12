@@ -2,7 +2,7 @@ import { Button, Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { setStatusChannelModal } from '../../store/slices/modalsSlice';
-import ChannelForm from '../pages/subcomponents/ChannelForm';
+import ChannelForm from '../ChannelForm';
 
 const AddChannelModal = () => {
   const dispatch = useDispatch();
