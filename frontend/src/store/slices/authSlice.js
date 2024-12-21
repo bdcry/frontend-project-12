@@ -16,7 +16,6 @@ export const signupUser = createAsyncThunk(
   'auth/signupUser',
   async ({ username, password }) => {
     const response = await axios.post(apiPath.signupPath(), { username, password });
-    console.log(apiPath.loginPath());
     return response.data;
   },
 );
