@@ -8,7 +8,8 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { loginSuccess } from '../store/slices/authSlice';
 import avatar from '../assets/avatar-DIE1AEpS.jpg';
-import { apiPath, handleApiError, linkRoutes } from '../utils/routes';
+import { apiPath, linkRoutes } from '../utils/routes';
+import handleApiError from '../utils/errorHandler';
 
 const handleSubmit = async (values, navigate, setStatus, dispatch, t) => {
   try {

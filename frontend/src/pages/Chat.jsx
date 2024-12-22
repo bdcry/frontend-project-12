@@ -24,33 +24,20 @@ const Chat = () => {
   const messagesData = useSelector(({ messages }) => messages.messagesData);
 
   const ActiveChannelForTitle = channelsData.find((c) => c.id === activeChannelId) || {};
-  const filteredMessage = messagesData.filter((m) => m.channelId === activeChannelId);
-  console.log(filteredMessage);
+  const filteredMessage = messagesData?.filter((m) => m.channelId === activeChannelId);
 
   useEffect(() => {
     dispatch(fetchChannelsByToken(token));
     dispatch(fetchMessagesByToken(token));
   }, [dispatch, token]);
 
-  // useEffect(() => {
-  //   if (messagesData.length > 0) {
-  //     if (activeChannelId) {
-  //       messageRef.current?.scrollIntoView({ behavior: 'smooth' });
-  //     }
-  //   }
-  // });
-
-  // useEffect(() => {
-  //   if (messagesData.length > 0) {
-  //     const lastMessage = messagesData[messagesData.length - 1];
-  //     if (lastMessage.channelId === activeChannelId) {
-  //       messageRef.current?.scrollIntoView({ behavior: 'smooth' });
-  //     }
-  //   }
-  // }, [messagesData, activeChannelId]);
+  useEffect(() => {
+    messageRef.current.scrollIntoView({ behavior: 'smooth' });
+    // messageRef.current.scrollTop = messageRef.current.scrollHeight;
+  }, [filteredMessage]);
 
   const renderMessages = () => filteredMessage.map((message) => (
-    <div className="text-break mb-2" key={message.id} ref={messageRef}>
+    <div className="text-break mb-2" key={message.id}>
       <b className={message.username === username ? 'fw-bold' : 'fw-normal'}>{message.username}</b>
       :
       {' '}
@@ -90,6 +77,7 @@ const Chat = () => {
             <div
               id="messages-box"
               className="chat-messages overflow-auto px-5"
+              ref={messageRef}
             >
               {renderMessages()}
             </div>

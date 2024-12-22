@@ -2,7 +2,8 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { apiPath, handleApiError } from '../../utils/routes';
+import { apiPath } from '../../utils/routes';
+import handleApiError from '../../utils/errorHandler';
 
 export const fetchChannelsByToken = createAsyncThunk(
   'channels/fetchChannelsByToken',

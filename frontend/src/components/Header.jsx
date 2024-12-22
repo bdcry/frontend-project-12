@@ -14,7 +14,7 @@ const Header = () => {
   const renderLogoutButton = () => {
     if (isLoggedIn) {
       return (
-        <Button type="button" onClick={() => dispatch(logout(null))}>
+        <Button type="button" onClick={() => dispatch(logout())}>
           {t('header.logout')}
         </Button>
       );
