@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { act, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import {
@@ -16,15 +16,21 @@ import ChannelsList from '../components/ChannelsList';
 const Chat = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const messageRef = useRef(null);
+
   const token = useSelector(({ auth }) => auth.token);
   const username = useSelector(({ auth }) => auth.username);
   const channelsData = useSelector(({ channels }) => channels.channelsData);
   const activeChannelId = useSelector(({ channels }) => channels.activeChannelId);
   const messagesData = useSelector(({ messages }) => messages.messagesData);
 
-  const ActiveChannelForTitle = channelsData.find((c) => c.id === activeChannelId) || {};
+  const activeChannelForTitle = channelsData.find((c) => c.id === activeChannelId) || {};
+  const activeChannelIndex = channelsData.findIndex((channel) => channel.id === activeChannelId);
   const filteredMessage = messagesData?.filter((m) => m.channelId === activeChannelId);
+
+  const messagesRef = useRef(null);
+  const prevMessagesLength = useRef(0);
+  const channelsRef = useRef(null);
+  const defaultChannelId = '1';
 
   useEffect(() => {
     dispatch(fetchChannelsByToken(token));
@@ -32,9 +38,31 @@ const Chat = () => {
   }, [dispatch, token]);
 
   useEffect(() => {
-    messageRef.current.scrollIntoView({ behavior: 'smooth' });
-    // messageRef.current.scrollTop = messageRef.current.scrollHeight;
+    if (filteredMessage.length > prevMessagesLength.current) {
+      messagesRef.current.scrollTo({
+        top: messagesRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
+    prevMessagesLength.current = filteredMessage.length;
   }, [filteredMessage]);
+
+  useEffect(() => {
+    if (activeChannelId === defaultChannelId) {
+      channelsRef.current.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    } else {
+      const channelList = channelsRef.current.querySelectorAll('li');
+      const channelHeight = channelList[0].offsetHeight;
+      const scrollTop = activeChannelIndex * channelHeight;
+      channelsRef.current.scrollTo({
+        top: scrollTop,
+        behavior: 'smooth',
+      });
+    }
+  }, [channelsData, activeChannelId, activeChannelIndex]);
 
   const renderMessages = () => filteredMessage.map((message) => (
     <div className="text-break mb-2" key={message.id}>
@@ -57,6 +85,7 @@ const Chat = () => {
             as="ul"
             id="channels-box"
             className="flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block"
+            ref={channelsRef}
           >
             <ChannelsList data={{ channels: channelsData, activeChannelId }} />
           </Nav>
@@ -67,7 +96,7 @@ const Chat = () => {
               <p className="m-0">
                 <b>
                   <span># </span>
-                  {ActiveChannelForTitle.name}
+                  {activeChannelForTitle.name}
                 </b>
               </p>
               <span className="text-muted">
@@ -77,7 +106,7 @@ const Chat = () => {
             <div
               id="messages-box"
               className="chat-messages overflow-auto px-5"
-              ref={messageRef}
+              ref={messagesRef}
             >
               {renderMessages()}
             </div>
