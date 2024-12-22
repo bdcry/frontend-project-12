@@ -3,7 +3,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { apiPath } from '../../utils/routes';
-import handleApiError from '../../utils/errorHandler';
 
 const getInitialState = () => {
   const localToken = localStorage.getItem('token');
@@ -57,7 +56,6 @@ const authSlice = createSlice({
       .addCase(signupUser.rejected, (state, action) => {
         state.loadingStatus = 'rejected';
         state.error = action.error;
-        handleApiError(action.error);
       });
   },
 });

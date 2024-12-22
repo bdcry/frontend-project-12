@@ -3,7 +3,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { apiPath } from '../../utils/routes';
-import handleApiError from '../../utils/errorHandler';
 
 export const fetchMessagesByToken = createAsyncThunk(
   'messages/fetchMessagesByToken',
@@ -51,7 +50,6 @@ const messagesSlice = createSlice({
       .addCase(fetchMessagesByToken.rejected, (state, action) => {
         state.loadingStatus = 'rejected';
         state.error = action.error;
-        handleApiError(action.error);
       })
     // Отправка сообщений
       .addCase(sendMessagesByToken.pending, (state) => {
@@ -65,7 +63,6 @@ const messagesSlice = createSlice({
       .addCase(sendMessagesByToken.rejected, (state, action) => {
         state.loadingStatus = 'rejected';
         state.error = action.error;
-        handleApiError(action.error);
       });
   },
 });
