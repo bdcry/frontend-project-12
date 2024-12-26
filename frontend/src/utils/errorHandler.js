@@ -8,7 +8,7 @@ const handleApiError = (error) => {
   } else if (error.message.includes('409')) {
     toast.error(t('registration.errors.alredyRegistred'));
   } else if (error.message.includes('401')) {
-    toast.error('Токен устарел. Повторите вход');
+    toast.error(t('notifications.error.tokenExpired'));
   } else {
     toast.error(t('notifications.error.somethingWrong'));
   }

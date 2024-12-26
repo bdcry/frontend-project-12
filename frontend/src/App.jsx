@@ -15,9 +15,16 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    window.addEventListener('storage', () => {
-      dispatch(logout());
-    });
+    const handleTokenCheck = (event) => {
+      if (event.key === 'token') {
+        dispatch(logout());
+      }
+    };
+    window.addEventListener('storage', handleTokenCheck);
+
+    return () => {
+      window.removeEventListener('storage', handleTokenCheck);
+    };
   }, [dispatch]);
 
   return (

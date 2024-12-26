@@ -77,6 +77,7 @@ export default {
       error: {
         network: 'Something went wrong. Please check your connection.',
         somethingWrong: 'Something went wrong. Please try again later.',
+        tokenExpired: 'The token has expired. Please sign in again.',
       },
       success: {
         channelCreated: 'Channel created successfully!',

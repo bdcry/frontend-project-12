@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import { io } from 'socket.io-client';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import leoProfanity from 'leo-profanity';
 import { ErrorBoundary } from '@rollbar/react';
 import store from './store/index.js';
 import resources from './locales/index.js';
@@ -12,6 +11,7 @@ import App from './App';
 import { addMessage, removeMessageByChannelId } from './store/slices/messagesSlice.js';
 import { addChannel, removeChannel, renameChannel } from './store/slices/channelsSlice.js';
 import { setTranslator } from './utils/translator.js';
+import { FilterProvider } from './utils/context/FilterContext.jsx';
 
 const init = async () => {
   const socket = io();
@@ -42,12 +42,6 @@ const init = async () => {
     toast.success(i18n.t('notifications.success.channelRenamed'));
   });
 
-  const russianWords = leoProfanity.getDictionary('ru');
-  const englishWords = leoProfanity.getDictionary('en');
-  const combinedWords = [...russianWords, ...englishWords];
-  leoProfanity.addDictionary('multiLang', combinedWords);
-  leoProfanity.loadDictionary('multiLang');
-
   const state = store.getState();
   const { currentLanguage } = state.language;
 
@@ -62,10 +56,12 @@ const init = async () => {
   return (
     <ErrorBoundary config={rollbarConfig}>
       <Provider store={store}>
-        <I18nextProvider i18n={i18n}>
-          <App />
-          <ToastContainer />
-        </I18nextProvider>
+        <FilterProvider>
+          <I18nextProvider i18n={i18n}>
+            <App />
+            <ToastContainer />
+          </I18nextProvider>
+        </FilterProvider>
       </Provider>
     </ErrorBoundary>
   );

@@ -1,9 +1,10 @@
 import { Form, Button, InputGroup } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import leoProfanity from 'leo-profanity';
+import { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sendMessagesByToken } from '../store/slices/messagesSlice';
+import FilterContext from '../utils/context/FilterContext';
 
 const MessageForm = () => {
   const dispatch = useDispatch();
@@ -11,13 +12,14 @@ const MessageForm = () => {
   const token = useSelector(({ auth }) => auth.token);
   const username = useSelector(({ auth }) => auth.username);
   const activeChannelId = useSelector(({ channels }) => channels.activeChannelId);
+  const filter = useContext(FilterContext);
 
   const formik = useFormik({
     initialValues: {
       body: '',
     },
     onSubmit: (values, { resetForm }) => {
-      const cleanMessages = leoProfanity.clean(values.body);
+      const cleanMessages = filter.clean(values.body);
       const newMessage = {
         body: cleanMessages,
         channelId: activeChannelId,

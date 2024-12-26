@@ -1,12 +1,12 @@
 import { Button, Modal, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useContext } from 'react';
 import { useFormik } from 'formik';
-import leoProfanity from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
 import { setStatusChannelModal } from '../../store/slices/modalsSlice';
 import { renameChannelById } from '../../store/slices/channelsSlice';
 import { channelSchema } from '../../utils/validation/validationForm';
+import FilterContext from '../../utils/context/FilterContext';
 
 const RenameChannelModal = () => {
   const dispatch = useDispatch();
@@ -16,6 +16,7 @@ const RenameChannelModal = () => {
   const token = useSelector(({ auth }) => auth.token);
   const channelsData = useSelector(({ channels }) => channels.channelsData);
   const currentChannel = channelsData.find((channel) => channel.id === activeChannelId);
+  const filter = useContext(FilterContext);
 
   const inputRef = useRef(null);
 
@@ -29,7 +30,7 @@ const RenameChannelModal = () => {
     },
     validationSchema: channelSchema(channelsData, t, currentChannel.name),
     onSubmit: (values, { resetForm }) => {
-      const cleanChannelName = leoProfanity.clean(values.name.trim());
+      const cleanChannelName = filter.clean(values.name.trim());
       const editedChannel = { name: cleanChannelName };
       dispatch(renameChannelById({ token, id: currentChannel.id, editedChannel }));
       dispatch(
